@@ -86,7 +86,7 @@ export function BreakingNewsRibbon({
       )}
       {...props}
     >
-      <div className="container mx-auto px-4 py-2 md:py-3">
+      <div className="container mx-auto px-4 py-2 md:py-3 max-w-7xl">
         <div className="flex items-center justify-between gap-4">
           {/* Breaking News Content */}
           <div className="flex-1">

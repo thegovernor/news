@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Tajawal, IBM_Plex_Sans_Arabic } from "next/font/google";
 import "./globals.css";
+import { Header } from "@/components/menu/header";
 
 const tajawal = Tajawal({
   variable: "--font-arabic-sans",
@@ -29,6 +30,7 @@ export default function RootLayout({
       <body
         className={`${tajawal.variable} ${ibmPlexArabic.variable} antialiased`}
       >
+        <Header />
         {children}
       </body>
     </html>
