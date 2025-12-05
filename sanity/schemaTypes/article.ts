@@ -101,6 +101,13 @@ export default defineType({
       type: 'boolean',
       initialValue: false,
     }),
+    defineField({
+      name: 'breakingNews',
+      title: 'خبر عاجل',
+      type: 'boolean',
+      initialValue: false,
+      description: 'حدد هذا الخيار لعرض المقال في شريط الأخبار العاجلة',
+    }),
   ],
   preview: {
     select: {
