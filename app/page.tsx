@@ -1,5 +1,6 @@
 import { Hero } from "@/components/home/hero";
 import { BreakingNewsRibbon } from "@/components/home/breaking-news-ribbon";
+import { PoliticalAnalysis } from "@/components/home/political-analysis";
 import { getFeaturedArticles, getBreakingNews } from "@/lib/sanity/queries";
 
 export default async function Home() {
@@ -16,6 +17,7 @@ export default async function Home() {
         />
       )}
       <Hero articles={articles} />
+      <PoliticalAnalysis />
     </main>
   );
 }
