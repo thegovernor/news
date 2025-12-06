@@ -1,11 +1,13 @@
 import { Hero } from "@/components/home/hero";
 import { BreakingNewsRibbon } from "@/components/home/breaking-news-ribbon";
 import { PoliticalAnalysis } from "@/components/home/political-analysis";
-import { getFeaturedArticles, getBreakingNews } from "@/lib/sanity/queries";
+import { Articles } from "@/components/home/articles";
+import { getFeaturedArticles, getBreakingNews, getArticles } from "@/lib/sanity/queries";
 
 export default async function Home() {
   const articles = await getFeaturedArticles();
   const breakingNews = await getBreakingNews();
+  const latestArticles = await getArticles();
 
   return (
     <main className="min-h-screen bg-background">
@@ -18,6 +20,7 @@ export default async function Home() {
       )}
       <Hero articles={articles} />
       <PoliticalAnalysis />
+      <Articles articles={latestArticles} />
     </main>
   );
 }

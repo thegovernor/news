@@ -70,3 +70,30 @@ export async function getBreakingNews(): Promise<BreakingNews[]> {
   }
 }
 
+const ARTICLES_QUERY = `*[_type == "article"] | order(publishedAt desc) [0...5] {
+  _id,
+  title,
+  slug,
+  mainImage,
+  excerpt,
+  publishedAt,
+  category-> {
+    title,
+    slug
+  },
+  writer-> {
+    name,
+    slug
+  }
+}`
+
+export async function getArticles(): Promise<Article[]> {
+  try {
+    const result = await client.fetch<Article[]>(ARTICLES_QUERY)
+    return result || []
+  } catch (error) {
+    console.error("Error fetching articles:", error)
+    return []
+  }
+}
+
