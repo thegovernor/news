@@ -77,7 +77,7 @@ export function Header({ categories }: HeaderProps) {
             {displayCategories.map((category) => (
               <Link
                 key={category._id}
-                href={`/category/${category.slug.current}`}
+                href="#"
                 className="text-sm font-medium transition-colors hover:text-primary"
               >
                 {category.title}
@@ -121,7 +121,7 @@ export function Header({ categories }: HeaderProps) {
                   {displayCategories.map((category) => (
                     <Link
                       key={category._id}
-                      href={`/category/${category.slug.current}`}
+                      href="#"
                       className="text-lg font-medium transition-colors hover:text-primary"
                       onClick={() => setIsOpen(false)}
                     >
