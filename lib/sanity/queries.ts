@@ -97,3 +97,27 @@ export async function getArticles(): Promise<Article[]> {
   }
 }
 
+export interface Tweet {
+  _id: string
+  url: string
+  order?: number
+  isActive?: boolean
+}
+
+const TWEETS_QUERY = `*[_type == "tweet" && isActive == true] | order(order asc) {
+  _id,
+  url,
+  order,
+  isActive
+}`
+
+export async function getTweets(): Promise<Tweet[]> {
+  try {
+    const result = await client.fetch<Tweet[]>(TWEETS_QUERY)
+    return result || []
+  } catch (error) {
+    console.error("Error fetching tweets:", error)
+    return []
+  }
+}
+
