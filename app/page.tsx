@@ -1,6 +1,7 @@
 import { Hero } from "@/components/home/hero";
 import { BreakingNewsRibbon } from "@/components/home/breaking-news-ribbon";
 import { PoliticalAnalysis } from "@/components/home/political-analysis";
+import { Barid } from "@/components/home/barid";
 import { Articles } from "@/components/home/articles";
 import { Tweets } from "@/components/home/tweets";
 import { getFeaturedArticles, getBreakingNews, getArticles, getTweets } from "@/lib/sanity/queries";
@@ -24,6 +25,7 @@ export default async function Home() {
       <PoliticalAnalysis />
       <Articles articles={latestArticles} />
       <Tweets tweets={tweets} />
+      <Barid />
     </main>
   );
 }
