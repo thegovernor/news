@@ -3,7 +3,6 @@
 import * as React from "react"
 import Link from "next/link"
 import { Menu, Search } from "lucide-react"
-import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
   Sheet,
@@ -12,50 +11,22 @@ import {
 } from "@/components/ui/sheet"
 import { Input } from "@/components/ui/input"
 
-export interface Category {
-  _id: string
-  title: string
-  slug: {
-    current: string
-  }
-}
-
-export interface HeaderProps {
-  categories?: Category[]
-}
-
-// Dummy categories data
-const dummyCategories: Category[] = [
-  {
-    _id: "1",
-    title: "السياسة",
-    slug: { current: "politics" },
-  },
-  {
-    _id: "2",
-    title: "الرياضة",
-    slug: { current: "sports" },
-  },
-  {
-    _id: "3",
-    title: "التكنولوجيا",
-    slug: { current: "technology" },
-  },
-  {
-    _id: "4",
-    title: "الاقتصاد",
-    slug: { current: "economy" },
-  },
-  {
-    _id: "5",
-    title: "الثقافة",
-    slug: { current: "culture" },
-  },
+// Section menu items from page.tsx
+const sectionMenuItems = [
+  { id: "hero", title: "الرئيسية", href: "/#hero" },
+  { id: "political-analysis", title: "التحليل السياسي", href: "/political-analysis" },
+  { id: "articles", title: "المقالات", href: "/#articles" },
+  { id: "barid", title: "سلة ودك", href: "/#barid" },
 ]
 
-export function Header({ categories }: HeaderProps) {
+// Additional menu items
+const additionalMenuItems = [
+  { id: "about", title: "من نحن", href: "/about" },
+  { id: "contact", title: "اتصل بنا", href: "/contact" },
+]
+
+export function Header() {
   const [isOpen, setIsOpen] = React.useState(false)
-  const displayCategories = categories || dummyCategories
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -68,19 +39,22 @@ export function Header({ categories }: HeaderProps) {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-6">
-            <Link
-              href="/"
-              className="text-sm font-medium transition-colors hover:text-primary"
-            >
-              الرئيسية
-            </Link>
-            {displayCategories.map((category) => (
+            {sectionMenuItems.map((section) => (
               <Link
-                key={category._id}
-                href="#"
+                key={section.id}
+                href={section.href}
                 className="text-sm font-medium transition-colors hover:text-primary"
               >
-                {category.title}
+                {section.title}
+              </Link>
+            ))}
+            {additionalMenuItems.map((item) => (
+              <Link
+                key={item.id}
+                href={item.href}
+                className="text-sm font-medium transition-colors hover:text-primary"
+              >
+                {item.title}
               </Link>
             ))}
           </nav>
@@ -111,21 +85,24 @@ export function Header({ categories }: HeaderProps) {
               </SheetTrigger>
               <SheetContent side="right" className="w-[300px] sm:w-[400px]">
                 <div className="flex flex-col gap-4 mt-8">
-                  <Link
-                    href="/"
-                    className="text-lg font-medium transition-colors hover:text-primary"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    الرئيسية
-                  </Link>
-                  {displayCategories.map((category) => (
+                  {sectionMenuItems.map((section) => (
                     <Link
-                      key={category._id}
-                      href="#"
+                      key={section.id}
+                      href={section.href}
                       className="text-lg font-medium transition-colors hover:text-primary"
                       onClick={() => setIsOpen(false)}
                     >
-                      {category.title}
+                      {section.title}
+                    </Link>
+                  ))}
+                  {additionalMenuItems.map((item) => (
+                    <Link
+                      key={item.id}
+                      href={item.href}
+                      className="text-lg font-medium transition-colors hover:text-primary"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      {item.title}
                     </Link>
                   ))}
                   

@@ -15,17 +15,29 @@ export default async function Home() {
   return (
     <main className="min-h-screen bg-background">
       {breakingNews.length > 0 && (
-        <BreakingNewsRibbon
-          items={breakingNews}
-          variant="urgent"
-          rotationInterval={5000}
-        />
+        <div id="breaking-news">
+          <BreakingNewsRibbon
+            items={breakingNews}
+            variant="urgent"
+            rotationInterval={5000}
+          />
+        </div>
       )}
-      <Hero articles={articles} />
-      <PoliticalAnalysis />
-      <Articles articles={latestArticles} />
-      <Tweets tweets={tweets} />
-      <Barid />
+      <div id="hero">
+        <Hero articles={articles} />
+      </div>
+      <div id="political-analysis">
+        <PoliticalAnalysis />
+      </div>
+      <div id="articles">
+        <Articles articles={latestArticles} />
+      </div>
+      <div id="tweets">
+        <Tweets tweets={tweets} />
+      </div>
+      <div id="barid">
+        <Barid />
+      </div>
     </main>
   );
 }

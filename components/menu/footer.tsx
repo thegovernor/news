@@ -2,7 +2,14 @@
 
 import * as React from "react"
 import Link from "next/link"
-import { cn } from "@/lib/utils"
+
+// Section menu items matching header
+const sectionMenuItems = [
+  { id: "hero", title: "الرئيسية", href: "/#hero" },
+  { id: "political-analysis", title: "التحليل السياسي", href: "/political-analysis" },
+  { id: "articles", title: "المقالات", href: "/#articles" },
+  { id: "barid", title: "سلة ودك", href: "/#barid" },
+]
 
 export function Footer() {
   return (
@@ -15,7 +22,7 @@ export function Footer() {
             <ul className="space-y-2">
               <li>
                 <Link
-                  href="#"
+                  href="/about"
                   className="text-sm text-muted-foreground transition-colors hover:text-primary"
                 >
                   من نحن
@@ -39,7 +46,7 @@ export function Footer() {
               </li>
               <li>
                 <Link
-                  href="#"
+                  href="/contact"
                   className="text-sm text-muted-foreground transition-colors hover:text-primary"
                 >
                   اتصل بنا
@@ -48,50 +55,20 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Categories Section */}
+          {/* Sections Section */}
           <div className="space-y-4">
             <h3 className="text-lg font-semibold">الأقسام</h3>
             <ul className="space-y-2">
-              <li>
-                <Link
-                  href="#"
-                  className="text-sm text-muted-foreground transition-colors hover:text-primary"
-                >
-                  السياسة
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="#"
-                  className="text-sm text-muted-foreground transition-colors hover:text-primary"
-                >
-                  الرياضة
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="#"
-                  className="text-sm text-muted-foreground transition-colors hover:text-primary"
-                >
-                  التكنولوجيا
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="#"
-                  className="text-sm text-muted-foreground transition-colors hover:text-primary"
-                >
-                  الاقتصاد
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="#"
-                  className="text-sm text-muted-foreground transition-colors hover:text-primary"
-                >
-                  الثقافة
-                </Link>
-              </li>
+              {sectionMenuItems.map((section) => (
+                <li key={section.id}>
+                  <Link
+                    href={section.href}
+                    className="text-sm text-muted-foreground transition-colors hover:text-primary"
+                  >
+                    {section.title}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 

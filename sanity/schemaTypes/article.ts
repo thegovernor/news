@@ -2,7 +2,7 @@ import {defineField, defineType} from 'sanity'
 
 export default defineType({
   name: 'article',
-  title: 'المقال',
+  title: 'مقالات',
   type: 'document',
   fields: [
     defineField({
@@ -57,7 +57,6 @@ export default defineType({
       title: 'الملخص',
       type: 'text',
       description: 'ملخص قصير للمقال',
-      validation: (Rule) => Rule.max(200),
     }),
     defineField({
       name: 'publishedAt',
