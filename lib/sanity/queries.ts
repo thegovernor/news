@@ -1,5 +1,6 @@
 import { client } from "@/sanity/lib/client"
 import type { SanityImageSource } from "@sanity/image-url/lib/types/types"
+import Parser from "rss-parser"
 
 export interface Article {
   _id: string
@@ -45,12 +46,23 @@ export async function getFeaturedArticles(): Promise<Article[]> {
   return await client.fetch<Article[]>(FEATURED_ARTICLES_QUERY)
 }
 
-const BREAKING_NEWS_QUERY = `*[_type == "article" && breakingNews == true] | order(publishedAt desc) {
+const RSS_FEEDS_QUERY = `*[_type == "rssFeed" && isActive == true] {
   _id,
   title,
-  slug,
-  publishedAt
+  url,
+  itemLimit,
+  linkPattern,
+  updateInterval
 }`
+
+export interface RSSFeedConfig {
+  _id: string
+  title: string
+  url: string
+  itemLimit?: number
+  linkPattern?: string
+  updateInterval?: number
+}
 
 export interface BreakingNews {
   _id: string
@@ -58,15 +70,103 @@ export interface BreakingNews {
   slug: {
     current: string
   }
-  publishedAt: string
+  publishedAt?: string
+  source?: string
+  link?: string // Original RSS item link
+  isRSS?: boolean // Flag to indicate if this is from RSS
+}
+
+const parser = new Parser({
+  customFields: {
+    item: ['link', 'guid'],
+  },
+})
+
+async function parseRSSFeed(feedConfig: RSSFeedConfig): Promise<BreakingNews[]> {
+  try {
+    const feed = await parser.parseURL(feedConfig.url)
+    const limit = feedConfig.itemLimit || 10
+    
+    if (!feed.items || feed.items.length === 0) {
+      return []
+    }
+
+    return feed.items.slice(0, limit).map((item, index) => {
+      // Extract slug from link or generate one
+      let slug = item.link || item.guid || ''
+      
+      // If linkPattern is provided, try to extract slug from it
+      // Otherwise, try to extract from URL or use a generated one
+      if (feedConfig.linkPattern && slug) {
+        // If pattern has {link}, we'll use the full link
+        // Otherwise, try to extract slug from URL
+        const urlMatch = slug.match(/\/([^\/]+)\/?$/)
+        if (urlMatch) {
+          slug = urlMatch[1]
+        }
+      } else if (slug) {
+        // Extract slug from URL
+        const urlMatch = slug.match(/\/([^\/]+)\/?$/)
+        if (urlMatch) {
+          slug = urlMatch[1]
+        } else {
+          // Fallback: generate slug from title
+          slug = item.title
+            ?.toLowerCase()
+            .replace(/[^a-z0-9\u0600-\u06FF]+/g, '-')
+            .replace(/^-+|-+$/g, '') || `item-${index}`
+        }
+      } else {
+        // Generate slug from title
+        slug = item.title
+          ?.toLowerCase()
+          .replace(/[^a-z0-9\u0600-\u06FF]+/g, '-')
+          .replace(/^-+|-+$/g, '') || `item-${index}`
+      }
+
+      return {
+        _id: `rss-${feedConfig._id}-${index}`,
+        title: item.title || 'بدون عنوان',
+        slug: {
+          current: slug,
+        },
+        publishedAt: item.pubDate || item.isoDate || new Date().toISOString(),
+        source: feedConfig.title,
+        link: item.link || item.guid || '',
+        isRSS: true,
+      }
+    })
+  } catch (error) {
+    console.error(`Error parsing RSS feed ${feedConfig.url}:`, error)
+    return []
+  }
 }
 
 export async function getBreakingNews(): Promise<BreakingNews[]> {
   try {
-    const result = await client.fetch<BreakingNews[]>(BREAKING_NEWS_QUERY)
-    return result || []
+    // Fetch active RSS feed configurations
+    const feedConfigs = await client.fetch<RSSFeedConfig[]>(RSS_FEEDS_QUERY)
+    
+    if (!feedConfigs || feedConfigs.length === 0) {
+      return []
+    }
+
+    // Parse all RSS feeds in parallel
+    const allFeeds = await Promise.all(
+      feedConfigs.map(config => parseRSSFeed(config))
+    )
+
+    // Flatten and combine all items
+    const allItems = allFeeds.flat()
+
+    // Sort by publishedAt (most recent first) and return
+    return allItems.sort((a, b) => {
+      const dateA = a.publishedAt ? new Date(a.publishedAt).getTime() : 0
+      const dateB = b.publishedAt ? new Date(b.publishedAt).getTime() : 0
+      return dateB - dateA
+    })
   } catch (error) {
-    console.error("Error fetching breaking news:", error)
+    console.error("Error fetching breaking news from RSS:", error)
     return []
   }
 }

@@ -13,6 +13,8 @@ export interface BreakingNewsItem {
   slug: {
     current: string
   }
+  link?: string // Original RSS item link
+  isRSS?: boolean // Flag to indicate if this is from RSS
 }
 
 export interface BreakingNewsRibbonProps
@@ -90,12 +92,23 @@ export function BreakingNewsRibbon({
         <div className="flex items-center justify-between gap-4">
           {/* Breaking News Content */}
           <div className="flex-1">
-            <Link 
-              href={`/article/${currentItem.slug.current}`} 
-              className="block"
-            >
-              {content}
-            </Link>
+            {currentItem.isRSS && currentItem.link ? (
+              <a 
+                href={currentItem.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block"
+              >
+                {content}
+              </a>
+            ) : (
+              <Link 
+                href={`/article/${currentItem.slug.current}`} 
+                className="block"
+              >
+                {content}
+              </Link>
+            )}
           </div>
 
           {/* Dismiss Button */}
