@@ -4,13 +4,15 @@ import { PoliticalAnalysis } from "@/components/home/political-analysis";
 import { Barid } from "@/components/home/barid";
 import { Articles } from "@/components/home/articles";
 import { Tweets } from "@/components/home/tweets";
-import { getFeaturedArticles, getBreakingNews, getArticles, getTweets } from "@/lib/sanity/queries";
+import { getFeaturedArticles, getBreakingNews, getArticles, getTweets, getPoliticalAnalysisArticlesLimited, getBaridArticlesLimited } from "@/lib/sanity/queries";
 
 export default async function Home() {
   const articles = await getFeaturedArticles();
   const breakingNews = await getBreakingNews();
   const latestArticles = await getArticles();
   const tweets = await getTweets();
+  const politicalAnalysisArticles = await getPoliticalAnalysisArticlesLimited();
+  const baridArticles = await getBaridArticlesLimited();
 
   return (
     <main className="min-h-screen bg-background">
@@ -27,7 +29,7 @@ export default async function Home() {
         <Hero articles={articles} />
       </div>
       <div id="political-analysis">
-        <PoliticalAnalysis />
+        <PoliticalAnalysis articles={politicalAnalysisArticles} />
       </div>
       <div id="articles">
         <Articles articles={latestArticles} />
@@ -36,7 +38,7 @@ export default async function Home() {
         <Tweets tweets={tweets} />
       </div>
       <div id="barid">
-        <Barid />
+        <Barid articles={baridArticles} />
       </div>
     </main>
   );

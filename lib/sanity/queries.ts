@@ -71,7 +71,7 @@ export async function getBreakingNews(): Promise<BreakingNews[]> {
   }
 }
 
-const ARTICLES_QUERY = `*[_type == "article"] | order(publishedAt desc) [0...5] {
+const ARTICLES_QUERY = `*[_type == "article" && category->title == "مقالات"] | order(publishedAt desc) [0...3] {
   _id,
   title,
   slug,
@@ -142,6 +142,33 @@ const POLITICAL_ANALYSIS_ARTICLES_QUERY = `*[_type == "article" && category->tit
 export async function getPoliticalAnalysisArticles(): Promise<Article[]> {
   try {
     const result = await client.fetch<Article[]>(POLITICAL_ANALYSIS_ARTICLES_QUERY)
+    return result || []
+  } catch (error) {
+    console.error("Error fetching political analysis articles:", error)
+    return []
+  }
+}
+
+const POLITICAL_ANALYSIS_ARTICLES_LIMITED_QUERY = `*[_type == "article" && category->title == "تحليلات سياسية"] | order(publishedAt desc) [0...6] {
+  _id,
+  title,
+  slug,
+  mainImage,
+  excerpt,
+  publishedAt,
+  category-> {
+    title,
+    slug
+  },
+  writer-> {
+    name,
+    slug
+  }
+}`
+
+export async function getPoliticalAnalysisArticlesLimited(): Promise<Article[]> {
+  try {
+    const result = await client.fetch<Article[]>(POLITICAL_ANALYSIS_ARTICLES_LIMITED_QUERY)
     return result || []
   } catch (error) {
     console.error("Error fetching political analysis articles:", error)
@@ -292,6 +319,33 @@ const BARID_ARTICLES_QUERY = `*[_type == "article" && category->title == "سلة
 export async function getBaridArticles(): Promise<Article[]> {
   try {
     const result = await client.fetch<Article[]>(BARID_ARTICLES_QUERY)
+    return result || []
+  } catch (error) {
+    console.error("Error fetching barid articles:", error)
+    return []
+  }
+}
+
+const BARID_ARTICLES_LIMITED_QUERY = `*[_type == "article" && category->title == "سلة ودك"] | order(publishedAt desc) [0...3] {
+  _id,
+  title,
+  slug,
+  mainImage,
+  excerpt,
+  publishedAt,
+  category-> {
+    title,
+    slug
+  },
+  writer-> {
+    name,
+    slug
+  }
+}`
+
+export async function getBaridArticlesLimited(): Promise<Article[]> {
+  try {
+    const result = await client.fetch<Article[]>(BARID_ARTICLES_LIMITED_QUERY)
     return result || []
   } catch (error) {
     console.error("Error fetching barid articles:", error)
