@@ -385,3 +385,49 @@ export async function getAbout(): Promise<AboutContent | null> {
   }
 }
 
+export interface ContactContent {
+  _id: string
+  title: string
+  description?: string
+  email?: string
+  phone?: string
+  address?: string
+  workingHours?: {
+    weekdays?: string
+    weekend?: string
+  }
+  social?: {
+    twitter?: string
+    facebook?: string
+    instagram?: string
+    linkedin?: string
+    youtube?: string
+  }
+  googleMaps?: {
+    embedUrl?: string
+    link?: string
+  }
+}
+
+const CONTACT_QUERY = `*[_type == "contact"][0] {
+  _id,
+  title,
+  description,
+  email,
+  phone,
+  address,
+  workingHours,
+  social,
+  googleMaps
+}`
+
+export async function getContact(): Promise<ContactContent | null> {
+  try {
+    const result = await client.fetch<ContactContent | null>(CONTACT_QUERY)
+    return result || null
+  } catch (error) {
+    console.error("Error fetching contact content:", error)
+    return null
+  }
+}
+
