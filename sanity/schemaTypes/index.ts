@@ -1,6 +1,5 @@
 import { type SchemaTypeDefinition } from 'sanity'
 import article from './article'
-import category from './category'
 import writer from './writer'
 import tweet from './tweet'
 import about from './about'
@@ -10,5 +9,5 @@ import footerMenu from './footer-menu'
 import rssFeed from './rss-feed'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
-  types: [article, category, writer, tweet, about, contact, headerMenu, footerMenu, rssFeed],
+  types: [article, writer, tweet, about, contact, headerMenu, footerMenu, rssFeed],
 }

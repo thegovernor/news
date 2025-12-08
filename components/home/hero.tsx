@@ -21,15 +21,30 @@ const FEATURED_ARTICLES_QUERY = `*[_type == "article" && featured == true] | ord
   mainImage,
   excerpt,
   publishedAt,
-  category-> {
-    title,
-    slug
-  },
+  category,
   writer-> {
     name,
     slug
   }
 }`
+
+import { getCategoryString } from "@/lib/utils/article"
+
+// Helper function to get article URL based on category
+function getArticleUrl(article: Article): string {
+  const category = getCategoryString(article.category)
+  const slug = article.slug.current
+  
+  // Map category values to routes
+  if (category === "تحليلات سياسية" || category === "سياسة") {
+    return `/political-analysis/${slug}`
+  } else if (category === "سلة ودك") {
+    return `/barid/${slug}`
+  } else {
+    // Default to articles route (مقالات, رياضة, etc.)
+    return `/articles/${slug}`
+  }
+}
 
 export function Hero({ articles: initialArticles }: HeroProps) {
   const [articles, setArticles] = useState<Article[]>(initialArticles || [])
@@ -98,7 +113,7 @@ export function Hero({ articles: initialArticles }: HeroProps) {
           {/* Main Featured Article - Wide Column */}
           {featuredArticle && (
             <div className="lg:col-span-2 flex">
-              <Link href={`/article/${featuredArticle.slug.current}`} className="flex-1 flex flex-col w-full">
+              <Link href={getArticleUrl(featuredArticle)} className="flex-1 flex flex-col w-full">
                 <Card className="group flex-1 overflow-hidden border-0 shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer rounded-none flex flex-col min-h-full">
                   <div className="relative w-full flex-1 overflow-hidden min-h-[300px] lg:min-h-0">
                     <Image
@@ -121,7 +136,7 @@ export function Hero({ articles: initialArticles }: HeroProps) {
                             variant="secondary" 
                             className="bg-primary/90 backdrop-blur-sm text-primary-foreground border-0 font-medium text-xs md:text-sm shadow-lg"
                           >
-                            {featuredArticle.category.title}
+                            {getCategoryString(featuredArticle.category)}
                           </Badge>
                           <div className="flex items-center gap-1 md:gap-1.5 text-xs md:text-sm text-white/95 backdrop-blur-sm">
                             <User className="w-3 h-3 md:w-4 md:h-4" />
@@ -165,7 +180,7 @@ export function Hero({ articles: initialArticles }: HeroProps) {
                   {sidebarArticles.map((article) => (
                     <Link
                       key={article._id}
-                      href={`/article/${article.slug.current}`}
+                      href={getArticleUrl(article)}
                       className="block w-[280px] flex-shrink-0"
                     >
                       <Card className="group overflow-hidden border-0 transition-all duration-300 cursor-pointer hover:shadow-lg rounded-none h-full">
@@ -185,7 +200,7 @@ export function Hero({ articles: initialArticles }: HeroProps) {
                             variant="outline" 
                             className="mb-2 text-xs"
                           >
-                            {article.category.title}
+                            {getCategoryString(article.category)}
                           </Badge>
                           <h3 className="text-sm font-bold mb-2 line-clamp-2 group-hover:text-primary transition-colors leading-snug">
                             {article.title}
@@ -208,7 +223,7 @@ export function Hero({ articles: initialArticles }: HeroProps) {
                 {sidebarArticles.map((article, index) => (
                   <Link
                     key={article._id}
-                    href={`/article/${article.slug.current}`}
+                    href={getArticleUrl(article)}
                     className="block py-1"
                   >
                     <Card className="group overflow-hidden border-0 transition-all duration-300 cursor-pointer hover:shadow-lg rounded-none">
@@ -233,7 +248,7 @@ export function Hero({ articles: initialArticles }: HeroProps) {
                               variant="outline" 
                               className="mb-2 text-xs"
                             >
-                              {article.category.title}
+                              {getCategoryString(article.category)}
                             </Badge>
                             <h3 className="text-base font-bold mb-2 line-clamp-2 group-hover:text-primary transition-colors leading-snug">
                               {article.title}

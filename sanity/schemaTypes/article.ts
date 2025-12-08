@@ -39,8 +39,17 @@ export default defineType({
     defineField({
       name: 'category',
       title: 'الفئة',
-      type: 'reference',
-      to: [{type: 'category'}],
+      type: 'string',
+      options: {
+        list: [
+          { title: 'مقالات', value: 'مقالات' },
+          { title: 'تحليلات سياسية', value: 'تحليلات سياسية' },
+          { title: 'سلة ودك', value: 'سلة ودك' },
+          { title: 'سياسة', value: 'سياسة' },
+          { title: 'رياضة', value: 'رياضة' },
+        ],
+        layout: 'dropdown',
+      },
       validation: (Rule) => Rule.required(),
     }),
     defineField({

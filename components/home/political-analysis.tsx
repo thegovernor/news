@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge"
 import { urlFor } from "@/sanity/lib/image"
 import type { Article } from "@/lib/sanity/queries"
 import { Clock, TrendingUp, User } from "lucide-react"
+import { getCategoryString } from "@/lib/utils/article"
 
 interface PoliticalAnalysisProps {
   articles?: Article[]
@@ -57,7 +58,7 @@ export function PoliticalAnalysis({
                         variant="secondary" 
                         className="bg-primary/90 backdrop-blur-sm text-primary-foreground border-0 font-medium text-xs shadow-lg"
                       >
-                        {article.category.title}
+                        {getCategoryString(article.category)}
                       </Badge>
                     </div>
                   </div>

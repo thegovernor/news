@@ -103,7 +103,7 @@ export function BreakingNewsRibbon({
               </a>
             ) : (
               <Link 
-                href={`/article/${currentItem.slug.current}`} 
+                href={`/articles/${currentItem.slug.current}`} 
                 className="block"
               >
                 {content}

@@ -8,6 +8,7 @@ import type { ArticleDetail } from "@/lib/sanity/queries"
 import { Clock, User, Mail, ArrowRight } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { Card } from "@/components/ui/card"
+import { getCategoryString } from "@/lib/utils/article"
 
 interface BaridDetailProps {
   article: ArticleDetail
@@ -37,60 +38,65 @@ const portableTextComponents = {
     },
   },
   block: {
-    h1: ({ children }: { children: React.ReactNode }) => (
+    h1: ({ children }: { children?: React.ReactNode }) => (
       <h1 className="text-3xl md:text-4xl font-bold mt-8 mb-4">{children}</h1>
     ),
-    h2: ({ children }: { children: React.ReactNode }) => (
+    h2: ({ children }: { children?: React.ReactNode }) => (
       <h2 className="text-2xl md:text-3xl font-bold mt-6 mb-3">{children}</h2>
     ),
-    h3: ({ children }: { children: React.ReactNode }) => (
+    h3: ({ children }: { children?: React.ReactNode }) => (
       <h3 className="text-xl md:text-2xl font-bold mt-4 mb-2">{children}</h3>
     ),
-    h4: ({ children }: { children: React.ReactNode }) => (
+    h4: ({ children }: { children?: React.ReactNode }) => (
       <h4 className="text-lg md:text-xl font-bold mt-4 mb-2">{children}</h4>
     ),
-    normal: ({ children }: { children: React.ReactNode }) => (
+    normal: ({ children }: { children?: React.ReactNode }) => (
       <p className="text-base md:text-lg leading-relaxed mb-4">{children}</p>
     ),
-    blockquote: ({ children }: { children: React.ReactNode }) => (
+    blockquote: ({ children }: { children?: React.ReactNode }) => (
       <blockquote className="border-r-4 border-primary pr-4 my-6 italic text-muted-foreground">
         {children}
       </blockquote>
     ),
   },
   list: {
-    bullet: ({ children }: { children: React.ReactNode }) => (
+    bullet: ({ children }: { children?: React.ReactNode }) => (
       <ul className="list-disc list-inside mb-4 space-y-2">{children}</ul>
     ),
-    number: ({ children }: { children: React.ReactNode }) => (
+    number: ({ children }: { children?: React.ReactNode }) => (
       <ol className="list-decimal list-inside mb-4 space-y-2">{children}</ol>
     ),
   },
   listItem: {
-    bullet: ({ children }: { children: React.ReactNode }) => (
+    bullet: ({ children }: { children?: React.ReactNode }) => (
       <li className="ml-4">{children}</li>
     ),
-    number: ({ children }: { children: React.ReactNode }) => (
+    number: ({ children }: { children?: React.ReactNode }) => (
       <li className="ml-4">{children}</li>
     ),
   },
   marks: {
-    strong: ({ children }: { children: React.ReactNode }) => (
+    strong: ({ children }: { children?: React.ReactNode }) => (
       <strong className="font-bold">{children}</strong>
     ),
-    em: ({ children }: { children: React.ReactNode }) => (
+    em: ({ children }: { children?: React.ReactNode }) => (
       <em className="italic">{children}</em>
     ),
-    link: ({ value, children }: { value: { href: string }; children: React.ReactNode }) => (
-      <a
-        href={value.href}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="text-primary hover:underline"
-      >
-        {children}
-      </a>
-    ),
+    link: ({ value, children }: { value?: { href?: string }; children?: React.ReactNode }) => {
+      if (!value?.href) {
+        return <>{children}</>
+      }
+      return (
+        <a
+          href={value.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-primary hover:underline"
+        >
+          {children}
+        </a>
+      )
+    },
   },
 }
 
@@ -113,7 +119,7 @@ export function BaridDetail({ article }: BaridDetailProps) {
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-4">
             <Badge variant="secondary" className="bg-primary/10 text-primary">
-              {article.category.title}
+              {getCategoryString(article.category)}
             </Badge>
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <User className="w-4 h-4" />

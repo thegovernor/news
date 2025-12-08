@@ -1,5 +1,6 @@
 import { client } from "@/sanity/lib/client"
 import type { SanityImageSource } from "@sanity/image-url/lib/types/types"
+import type { PortableTextBlock } from "@portabletext/react"
 import Parser from "rss-parser"
 
 export interface Article {
@@ -11,12 +12,7 @@ export interface Article {
   mainImage: SanityImageSource
   excerpt?: string
   publishedAt: string
-  category: {
-    title: string
-    slug: {
-      current: string
-    }
-  }
+  category: string | { _ref?: string; _type?: string; title?: string } // Support both string and old reference format
   writer: {
     name: string
     slug: {
@@ -32,10 +28,7 @@ const FEATURED_ARTICLES_QUERY = `*[_type == "article" && featured == true] | ord
   mainImage,
   excerpt,
   publishedAt,
-  category-> {
-    title,
-    slug
-  },
+  category,
   writer-> {
     name,
     slug
@@ -171,17 +164,14 @@ export async function getBreakingNews(): Promise<BreakingNews[]> {
   }
 }
 
-const ARTICLES_QUERY = `*[_type == "article" && category->title == "مقالات"] | order(publishedAt desc) [0...3] {
+const ARTICLES_QUERY = `*[_type == "article" && category == "مقالات"] | order(publishedAt desc) [0...3] {
   _id,
   title,
   slug,
   mainImage,
   excerpt,
   publishedAt,
-  category-> {
-    title,
-    slug
-  },
+  category,
   writer-> {
     name,
     slug
@@ -222,17 +212,14 @@ export async function getTweets(): Promise<Tweet[]> {
   }
 }
 
-const POLITICAL_ANALYSIS_ARTICLES_QUERY = `*[_type == "article" && category->title == "تحليلات سياسية"] | order(publishedAt desc) {
+const POLITICAL_ANALYSIS_ARTICLES_QUERY = `*[_type == "article" && category == "تحليلات سياسية"] | order(publishedAt desc) {
   _id,
   title,
   slug,
   mainImage,
   excerpt,
   publishedAt,
-  category-> {
-    title,
-    slug
-  },
+  category,
   writer-> {
     name,
     slug
@@ -249,17 +236,14 @@ export async function getPoliticalAnalysisArticles(): Promise<Article[]> {
   }
 }
 
-const POLITICAL_ANALYSIS_ARTICLES_LIMITED_QUERY = `*[_type == "article" && category->title == "تحليلات سياسية"] | order(publishedAt desc) [0...6] {
+const POLITICAL_ANALYSIS_ARTICLES_LIMITED_QUERY = `*[_type == "article" && category == "تحليلات سياسية"] | order(publishedAt desc) [0...6] {
   _id,
   title,
   slug,
   mainImage,
   excerpt,
   publishedAt,
-  category-> {
-    title,
-    slug
-  },
+  category,
   writer-> {
     name,
     slug
@@ -277,11 +261,11 @@ export async function getPoliticalAnalysisArticlesLimited(): Promise<Article[]> 
 }
 
 export interface ArticleDetail extends Article {
-  body: unknown // Portable text content (array of blocks)
+  body: PortableTextBlock[] | null | undefined // Portable text content (array of blocks)
   tags?: string[]
 }
 
-const POLITICAL_ANALYSIS_ARTICLE_BY_SLUG_QUERY = `*[_type == "article" && category->title == "تحليلات سياسية" && slug.current == $slug][0] {
+const POLITICAL_ANALYSIS_ARTICLE_BY_SLUG_QUERY = `*[_type == "article" && category == "تحليلات سياسية" && slug.current == $slug][0] {
   _id,
   title,
   slug,
@@ -290,10 +274,7 @@ const POLITICAL_ANALYSIS_ARTICLE_BY_SLUG_QUERY = `*[_type == "article" && catego
   publishedAt,
   body,
   tags,
-  category-> {
-    title,
-    slug
-  },
+  category,
   writer-> {
     name,
     slug
@@ -321,7 +302,7 @@ export async function getPoliticalAnalysisArticleBySlug(slug: string): Promise<A
     // Debug: List all slugs for this category
     if (!result) {
       const allSlugs = await client.fetch<Array<{ slug: { current: string }, title: string }>>(
-        `*[_type == "article" && category->title == "تحليلات سياسية"] { slug, title }`
+        `*[_type == "article" && category == "تحليلات سياسية"] { slug, title }`
       )
       console.log("Available slugs:", allSlugs.map(a => ({ slug: a.slug.current, title: a.title })))
     }
@@ -333,17 +314,14 @@ export async function getPoliticalAnalysisArticleBySlug(slug: string): Promise<A
   }
 }
 
-const ALL_ARTICLES_QUERY = `*[_type == "article" && category->title == "مقالات"] | order(publishedAt desc) {
+const ALL_ARTICLES_QUERY = `*[_type == "article" && category == "مقالات"] | order(publishedAt desc) {
   _id,
   title,
   slug,
   mainImage,
   excerpt,
   publishedAt,
-  category-> {
-    title,
-    slug
-  },
+  category,
   writer-> {
     name,
     slug
@@ -360,7 +338,7 @@ export async function getAllArticles(): Promise<Article[]> {
   }
 }
 
-const ARTICLE_BY_SLUG_QUERY = `*[_type == "article" && category->title == "مقالات" && slug.current == $slug][0] {
+const ARTICLE_BY_SLUG_QUERY = `*[_type == "article" && category == "مقالات" && slug.current == $slug][0] {
   _id,
   title,
   slug,
@@ -369,10 +347,7 @@ const ARTICLE_BY_SLUG_QUERY = `*[_type == "article" && category->title == "مق�
   publishedAt,
   body,
   tags,
-  category-> {
-    title,
-    slug
-  },
+  category,
   writer-> {
     name,
     slug
@@ -399,17 +374,14 @@ export async function getArticleBySlug(slug: string): Promise<ArticleDetail | nu
   }
 }
 
-const BARID_ARTICLES_QUERY = `*[_type == "article" && category->title == "سلة ودك"] | order(publishedAt desc) {
+const BARID_ARTICLES_QUERY = `*[_type == "article" && category == "سلة ودك"] | order(publishedAt desc) {
   _id,
   title,
   slug,
   mainImage,
   excerpt,
   publishedAt,
-  category-> {
-    title,
-    slug
-  },
+  category,
   writer-> {
     name,
     slug
@@ -426,17 +398,14 @@ export async function getBaridArticles(): Promise<Article[]> {
   }
 }
 
-const BARID_ARTICLES_LIMITED_QUERY = `*[_type == "article" && category->title == "سلة ودك"] | order(publishedAt desc) [0...3] {
+const BARID_ARTICLES_LIMITED_QUERY = `*[_type == "article" && category == "سلة ودك"] | order(publishedAt desc) [0...3] {
   _id,
   title,
   slug,
   mainImage,
   excerpt,
   publishedAt,
-  category-> {
-    title,
-    slug
-  },
+  category,
   writer-> {
     name,
     slug
@@ -453,7 +422,7 @@ export async function getBaridArticlesLimited(): Promise<Article[]> {
   }
 }
 
-const BARID_ARTICLE_BY_SLUG_QUERY = `*[_type == "article" && category->title == "سلة ودك" && slug.current == $slug][0] {
+const BARID_ARTICLE_BY_SLUG_QUERY = `*[_type == "article" && category == "سلة ودك" && slug.current == $slug][0] {
   _id,
   title,
   slug,
@@ -462,10 +431,7 @@ const BARID_ARTICLE_BY_SLUG_QUERY = `*[_type == "article" && category->title == 
   publishedAt,
   body,
   tags,
-  category-> {
-    title,
-    slug
-  },
+  category,
   writer-> {
     name,
     slug
@@ -496,7 +462,7 @@ export interface AboutContent {
   _id: string
   title: string
   mainImage?: SanityImageSource
-  content: unknown // Portable text content
+  content: PortableTextBlock[] | null | undefined // Portable text content
   mission?: {
     vision?: string
     mission?: string

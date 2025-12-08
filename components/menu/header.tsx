@@ -20,12 +20,12 @@ interface HeaderProps {
 
 // Fallback menu items if Sanity menu is not available
 const fallbackMenuItems = [
-  { title: "الرئيسية", href: "/#hero", order: 0 },
-  { title: "التحليل السياسي", href: "/political-analysis", order: 1 },
-  { title: "المقالات", href: "/articles", order: 2 },
-  { title: "سلة ودك", href: "/barid", order: 3 },
-  { title: "من نحن", href: "/about", order: 4 },
-  { title: "اتصل بنا", href: "/contact", order: 5 },
+  { title: "الرئيسية", href: "/#hero", order: 0, isExternal: false },
+  { title: "التحليل السياسي", href: "/political-analysis", order: 1, isExternal: false },
+  { title: "المقالات", href: "/articles", order: 2, isExternal: false },
+  { title: "سلة ودك", href: "/barid", order: 3, isExternal: false },
+  { title: "من نحن", href: "/about", order: 4, isExternal: false },
+  { title: "اتصل بنا", href: "/contact", order: 5, isExternal: false },
 ]
 
 export function Header({ menu }: HeaderProps) {

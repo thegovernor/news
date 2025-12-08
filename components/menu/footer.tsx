@@ -15,32 +15,32 @@ const fallbackSections = [
   {
     title: "عن الموقع",
     items: [
-      { title: "من نحن", href: "/about" },
-      { title: "اتصل بنا", href: "/contact" },
+      { title: "من نحن", href: "/about", isExternal: false },
+      { title: "اتصل بنا", href: "/contact", isExternal: false },
     ],
   },
   {
     title: "الأقسام",
     items: [
-      { title: "الرئيسية", href: "/#hero" },
-      { title: "التحليل السياسي", href: "/political-analysis" },
-      { title: "المقالات", href: "/articles" },
-      { title: "سلة ودك", href: "/barid" },
+      { title: "الرئيسية", href: "/#hero", isExternal: false },
+      { title: "التحليل السياسي", href: "/political-analysis", isExternal: false },
+      { title: "المقالات", href: "/articles", isExternal: false },
+      { title: "سلة ودك", href: "/barid", isExternal: false },
     ],
   },
   {
     title: "معلومات قانونية",
     items: [
-      { title: "شروط الاستخدام", href: "#" },
-      { title: "سياسة الخصوصية", href: "#" },
+      { title: "شروط الاستخدام", href: "#", isExternal: false },
+      { title: "سياسة الخصوصية", href: "#", isExternal: false },
     ],
   },
   {
     title: "تابعنا",
     items: [
-      { title: "تويتر", href: "#" },
-      { title: "فيسبوك", href: "#" },
-      { title: "إنستغرام", href: "#" },
+      { title: "تويتر", href: "#", isExternal: false },
+      { title: "فيسبوك", href: "#", isExternal: false },
+      { title: "إنستغرام", href: "#", isExternal: false },
     ],
   },
 ]
@@ -58,7 +58,7 @@ export function Footer({ menu }: FooterProps) {
               <h3 className="text-lg font-semibold">{section.title}</h3>
               <ul className="space-y-2">
                 {section.items.map((item, itemIndex) => (
-                  <li key={item.href || itemIndex}>
+                  <li key={`${section.title}-${itemIndex}-${item.href || item.title}`}>
                     <Link
                       href={item.href}
                       target={item.isExternal ? "_blank" : undefined}

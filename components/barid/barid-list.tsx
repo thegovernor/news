@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge"
 import { urlFor } from "@/sanity/lib/image"
 import type { Article } from "@/lib/sanity/queries"
 import { Clock, User, Mail } from "lucide-react"
+import { getCategoryString } from "@/lib/utils/article"
 
 interface BaridListProps {
   articles: Article[]
@@ -111,7 +112,7 @@ export function BaridList({ articles }: BaridListProps) {
                             variant="secondary" 
                             className="bg-primary/90 backdrop-blur-sm text-primary-foreground border-0 font-medium text-xs shadow-lg"
                           >
-                            {article.category.title}
+                            {getCategoryString(article.category)}
                           </Badge>
                         </div>
                       </div>

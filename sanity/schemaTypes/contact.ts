@@ -22,7 +22,7 @@ export default defineType({
       name: 'email',
       title: 'البريد الإلكتروني',
       type: 'string',
-      validation: (Rule) => Rule.email('يرجى إدخال بريد إلكتروني صحيح'),
+      validation: (Rule) => Rule.email(),
     }),
     defineField({
       name: 'phone',

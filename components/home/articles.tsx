@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge"
 import { urlFor } from "@/sanity/lib/image"
 import type { Article } from "@/lib/sanity/queries"
 import { Clock, User, Newspaper } from "lucide-react"
+import { getCategoryString } from "@/lib/utils/article"
 
 interface ArticlesProps {
   articles?: Article[]
@@ -57,7 +58,7 @@ export function Articles({
                         variant="secondary" 
                         className="bg-primary/90 backdrop-blur-sm text-primary-foreground border-0 font-medium text-xs shadow-lg"
                       >
-                        {article.category.title}
+                        {getCategoryString(article.category)}
                       </Badge>
                     </div>
                   </div>
