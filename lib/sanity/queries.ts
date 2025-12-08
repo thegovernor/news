@@ -338,3 +338,50 @@ export async function getBaridArticleBySlug(slug: string): Promise<ArticleDetail
   }
 }
 
+export interface AboutContent {
+  _id: string
+  title: string
+  mainImage?: SanityImageSource
+  content: unknown // Portable text content
+  mission?: {
+    vision?: string
+    mission?: string
+  }
+  values?: Array<{
+    title: string
+    description: string
+    icon?: string
+  }>
+  team?: Array<{
+    name: string
+    role: string
+    bio?: string
+    image?: SanityImageSource
+  }>
+}
+
+const ABOUT_QUERY = `*[_type == "about"][0] {
+  _id,
+  title,
+  mainImage,
+  content,
+  mission,
+  values,
+  team[] {
+    name,
+    role,
+    bio,
+    image
+  }
+}`
+
+export async function getAbout(): Promise<AboutContent | null> {
+  try {
+    const result = await client.fetch<AboutContent | null>(ABOUT_QUERY)
+    return result || null
+  } catch (error) {
+    console.error("Error fetching about content:", error)
+    return null
+  }
+}
+

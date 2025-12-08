@@ -3,7 +3,8 @@ import article from './article'
 import category from './category'
 import writer from './writer'
 import tweet from './tweet'
+import about from './about'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
-  types: [article, category, writer, tweet],
+  types: [article, category, writer, tweet, about],
 }
