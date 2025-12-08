@@ -272,3 +272,69 @@ export async function getArticleBySlug(slug: string): Promise<ArticleDetail | nu
   }
 }
 
+const BARID_ARTICLES_QUERY = `*[_type == "article" && category->title == "سلة ودك"] | order(publishedAt desc) {
+  _id,
+  title,
+  slug,
+  mainImage,
+  excerpt,
+  publishedAt,
+  category-> {
+    title,
+    slug
+  },
+  writer-> {
+    name,
+    slug
+  }
+}`
+
+export async function getBaridArticles(): Promise<Article[]> {
+  try {
+    const result = await client.fetch<Article[]>(BARID_ARTICLES_QUERY)
+    return result || []
+  } catch (error) {
+    console.error("Error fetching barid articles:", error)
+    return []
+  }
+}
+
+const BARID_ARTICLE_BY_SLUG_QUERY = `*[_type == "article" && category->title == "سلة ودك" && slug.current == $slug][0] {
+  _id,
+  title,
+  slug,
+  mainImage,
+  excerpt,
+  publishedAt,
+  body,
+  tags,
+  category-> {
+    title,
+    slug
+  },
+  writer-> {
+    name,
+    slug
+  }
+}`
+
+export async function getBaridArticleBySlug(slug: string): Promise<ArticleDetail | null> {
+  try {
+    // Clean the slug - remove any trailing characters and normalize
+    const cleanSlug = slug.trim().replace(/[ىي]$/g, '').replace(/[ىي][ىي]$/g, '')
+    
+    // Try with original slug first
+    let result = await client.fetch<ArticleDetail | null>(BARID_ARTICLE_BY_SLUG_QUERY, { slug })
+    
+    // If not found, try with cleaned slug
+    if (!result && cleanSlug !== slug) {
+      result = await client.fetch<ArticleDetail | null>(BARID_ARTICLE_BY_SLUG_QUERY, { slug: cleanSlug })
+    }
+    
+    return result || null
+  } catch (error) {
+    console.error("Error fetching barid article:", error)
+    return null
+  }
+}
+
