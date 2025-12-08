@@ -3,16 +3,23 @@
 import { usePathname } from "next/navigation"
 import { Header } from "./header"
 import { Footer } from "./footer"
+import type { HeaderMenu, FooterMenu } from "@/lib/sanity/queries"
 
-export function LayoutWrapper({ children }: { children: React.ReactNode }) {
+interface LayoutWrapperProps {
+  children: React.ReactNode
+  headerMenu: HeaderMenu | null
+  footerMenu: FooterMenu | null
+}
+
+export function LayoutWrapper({ children, headerMenu, footerMenu }: LayoutWrapperProps) {
   const pathname = usePathname()
   const isStudio = pathname?.startsWith("/studio")
 
   return (
     <>
-      {!isStudio && <Header />}
+      {!isStudio && <Header menu={headerMenu} />}
       {children}
-      {!isStudio && <Footer />}
+      {!isStudio && <Footer menu={footerMenu} />}
     </>
   )
 }

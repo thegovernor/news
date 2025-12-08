@@ -485,3 +485,97 @@ export async function getContact(): Promise<ContactContent | null> {
   }
 }
 
+export interface MenuItem {
+  title: string
+  href: string
+  order?: number
+  isExternal?: boolean
+}
+
+export interface MenuLogo {
+  image?: SanityImageSource
+  text?: string
+  href?: string
+}
+
+export interface HeaderMenu {
+  _id: string
+  title: string
+  logo?: MenuLogo
+  items: MenuItem[]
+}
+
+export interface FooterSectionItem {
+  title: string
+  href: string
+  isExternal?: boolean
+}
+
+export interface FooterSection {
+  title: string
+  items: FooterSectionItem[]
+}
+
+export interface FooterMenu {
+  _id: string
+  title: string
+  logo?: MenuLogo
+  sections?: FooterSection[]
+  copyright?: string
+}
+
+const HEADER_MENU_QUERY = `*[_type == "headerMenu"][0] {
+  _id,
+  title,
+  logo {
+    image,
+    text,
+    href
+  },
+  items[] | order(order asc) {
+    title,
+    href,
+    order,
+    isExternal
+  }
+}`
+
+export async function getHeaderMenu(): Promise<HeaderMenu | null> {
+  try {
+    const result = await client.fetch<HeaderMenu | null>(HEADER_MENU_QUERY)
+    return result || null
+  } catch (error) {
+    console.error("Error fetching header menu:", error)
+    return null
+  }
+}
+
+const FOOTER_MENU_QUERY = `*[_type == "footerMenu"][0] {
+  _id,
+  title,
+  logo {
+    image,
+    text,
+    href
+  },
+  sections[] {
+    title,
+    items[] {
+      title,
+      href,
+      isExternal
+    }
+  },
+  copyright
+}`
+
+export async function getFooterMenu(): Promise<FooterMenu | null> {
+  try {
+    const result = await client.fetch<FooterMenu | null>(FOOTER_MENU_QUERY)
+    return result || null
+  } catch (error) {
+    console.error("Error fetching footer menu:", error)
+    return null
+  }
+}
+

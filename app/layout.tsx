@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Tajawal, IBM_Plex_Sans_Arabic } from "next/font/google";
 import "./globals.css";
 import { LayoutWrapper } from "@/components/menu/layout-wrapper";
+import { getHeaderMenu, getFooterMenu } from "@/lib/sanity/queries";
 
 const tajawal = Tajawal({
   variable: "--font-arabic-sans",
@@ -20,17 +21,22 @@ export const metadata: Metadata = {
   description: "موقع الأخبار العربي - آخر الأخبار والتحديثات",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const headerMenu = await getHeaderMenu();
+  const footerMenu = await getFooterMenu();
+
   return (
     <html lang="ar" dir="rtl">
       <body
         className={`${tajawal.variable} ${ibmPlexArabic.variable} antialiased`}
       >
-        <LayoutWrapper>{children}</LayoutWrapper>
+        <LayoutWrapper headerMenu={headerMenu} footerMenu={footerMenu}>
+          {children}
+        </LayoutWrapper>
       </body>
     </html>
   );
