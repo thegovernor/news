@@ -15,7 +15,7 @@ import { Input } from "@/components/ui/input"
 const sectionMenuItems = [
   { id: "hero", title: "الرئيسية", href: "/#hero" },
   { id: "political-analysis", title: "التحليل السياسي", href: "/political-analysis" },
-  { id: "articles", title: "المقالات", href: "/#articles" },
+  { id: "articles", title: "المقالات", href: "/articles" },
   { id: "barid", title: "سلة ودك", href: "/#barid" },
 ]
 

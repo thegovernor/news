@@ -206,3 +206,69 @@ export async function getPoliticalAnalysisArticleBySlug(slug: string): Promise<A
   }
 }
 
+const ALL_ARTICLES_QUERY = `*[_type == "article" && category->title == "مقالات"] | order(publishedAt desc) {
+  _id,
+  title,
+  slug,
+  mainImage,
+  excerpt,
+  publishedAt,
+  category-> {
+    title,
+    slug
+  },
+  writer-> {
+    name,
+    slug
+  }
+}`
+
+export async function getAllArticles(): Promise<Article[]> {
+  try {
+    const result = await client.fetch<Article[]>(ALL_ARTICLES_QUERY)
+    return result || []
+  } catch (error) {
+    console.error("Error fetching articles:", error)
+    return []
+  }
+}
+
+const ARTICLE_BY_SLUG_QUERY = `*[_type == "article" && category->title == "مقالات" && slug.current == $slug][0] {
+  _id,
+  title,
+  slug,
+  mainImage,
+  excerpt,
+  publishedAt,
+  body,
+  tags,
+  category-> {
+    title,
+    slug
+  },
+  writer-> {
+    name,
+    slug
+  }
+}`
+
+export async function getArticleBySlug(slug: string): Promise<ArticleDetail | null> {
+  try {
+    // Clean the slug - remove any trailing characters and normalize
+    const cleanSlug = slug.trim().replace(/[ىي]$/g, '').replace(/[ىي][ىي]$/g, '')
+    
+    // Try with original slug first
+    let result = await client.fetch<ArticleDetail | null>(ARTICLE_BY_SLUG_QUERY, { slug })
+    
+    // If not found, try with cleaned slug
+    if (!result && cleanSlug !== slug) {
+      result = await client.fetch<ArticleDetail | null>(ARTICLE_BY_SLUG_QUERY, { slug: cleanSlug })
+    }
+    
+    return result || null
+  } catch (error) {
+    console.error("Error fetching article:", error)
+    return null
+  }
+}
+
