@@ -31,7 +31,25 @@ const fallbackMenuItems = [
 export function Header({ menu }: HeaderProps) {
   const [isOpen, setIsOpen] = React.useState(false)
   
-  const menuItems = menu?.items || fallbackMenuItems
+  // Normalize hrefs to ensure internal links are absolute paths
+  const normalizeHref = (href: string, isExternal: boolean): string => {
+    // For external links, return as-is
+    if (isExternal) {
+      return href
+    }
+    // For internal links, ensure they start with "/"
+    // If href starts with "#" (anchor), return as-is
+    if (href.startsWith("#") || href.startsWith("/")) {
+      return href
+    }
+    // Otherwise, prepend "/" to make it absolute
+    return `/${href}`
+  }
+  
+  const menuItems = (menu?.items || fallbackMenuItems).map(item => ({
+    ...item,
+    href: normalizeHref(item.href, item.isExternal || false)
+  }))
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -39,7 +57,7 @@ export function Header({ menu }: HeaderProps) {
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <Link 
-            href={menu?.logo?.href || "/"} 
+            href={menu?.logo?.href ? normalizeHref(menu.logo.href, false) : "/"} 
             className="flex items-center space-x-2 space-x-reverse"
           >
             {menu?.logo?.image ? (
