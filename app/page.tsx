@@ -2,9 +2,10 @@ import { Hero } from "@/components/home/hero";
 import { BreakingNewsRibbon } from "@/components/home/breaking-news-ribbon";
 import { PoliticalAnalysis } from "@/components/home/political-analysis";
 import { Barid } from "@/components/home/barid";
+import { SalaWadk } from "@/components/home/sala-wadk";
 import { Articles } from "@/components/home/articles";
 import { Tweets } from "@/components/home/tweets";
-import { getFeaturedArticles, getBreakingNews, getArticles, getTweets, getPoliticalAnalysisArticlesLimited, getBaridArticlesLimited } from "@/lib/sanity/queries";
+import { getFeaturedArticles, getBreakingNews, getArticles, getTweets, getPoliticalAnalysisArticlesLimited, getBaridArticlesLimited, getSalaWadkArticlesLimited } from "@/lib/sanity/queries";
 
 export default async function Home() {
   const articles = await getFeaturedArticles();
@@ -13,6 +14,7 @@ export default async function Home() {
   const tweets = await getTweets();
   const politicalAnalysisArticles = await getPoliticalAnalysisArticlesLimited();
   const baridArticles = await getBaridArticlesLimited();
+  const salaWadkArticles = await getSalaWadkArticlesLimited();
 
   return (
     <main className="min-h-screen bg-background">
@@ -39,6 +41,9 @@ export default async function Home() {
       </div>
       <div id="barid">
         <Barid articles={baridArticles} />
+      </div>
+      <div id="sala-wadk">
+        <SalaWadk articles={salaWadkArticles} />
       </div>
     </main>
   );

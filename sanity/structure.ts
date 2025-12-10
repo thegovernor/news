@@ -46,19 +46,11 @@ export const structure: StructureResolver = (S) =>
                     .defaultOrdering([{field: 'publishedAt', direction: 'desc'}])
                 ),
               S.listItem()
-                .title('سياسة')
+                .title('سلة ودك')
                 .child(
                   S.documentList()
-                    .title('سياسة')
-                    .filter('_type == "article" && category == "سياسة"')
-                    .defaultOrdering([{field: 'publishedAt', direction: 'desc'}])
-                ),
-              S.listItem()
-                .title('رياضة')
-                .child(
-                  S.documentList()
-                    .title('رياضة')
-                    .filter('_type == "article" && category == "رياضة"')
+                    .title('سلة ودك')
+                    .filter('_type == "article" && category == "سلة ودك"')
                     .defaultOrdering([{field: 'publishedAt', direction: 'desc'}])
                 ),
             ])

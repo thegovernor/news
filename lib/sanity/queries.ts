@@ -422,6 +422,90 @@ export async function getBaridArticlesLimited(): Promise<Article[]> {
   }
 }
 
+const SALA_WADK_ARTICLES_LIMITED_QUERY = `*[_type == "article" && category == "سلة ودك"] | order(publishedAt desc) [0...3] {
+  _id,
+  title,
+  slug,
+  mainImage,
+  excerpt,
+  publishedAt,
+  category,
+  writer-> {
+    name,
+    slug
+  }
+}`
+
+export async function getSalaWadkArticlesLimited(): Promise<Article[]> {
+  try {
+    const result = await client.fetch<Article[]>(SALA_WADK_ARTICLES_LIMITED_QUERY)
+    return result || []
+  } catch (error) {
+    console.error("Error fetching sala wadk articles:", error)
+    return []
+  }
+}
+
+const SALA_WADK_ARTICLES_QUERY = `*[_type == "article" && category == "سلة ودك"] | order(publishedAt desc) {
+  _id,
+  title,
+  slug,
+  mainImage,
+  excerpt,
+  publishedAt,
+  category,
+  writer-> {
+    name,
+    slug
+  }
+}`
+
+export async function getSalaWadkArticles(): Promise<Article[]> {
+  try {
+    const result = await client.fetch<Article[]>(SALA_WADK_ARTICLES_QUERY)
+    return result || []
+  } catch (error) {
+    console.error("Error fetching sala wadk articles:", error)
+    return []
+  }
+}
+
+const SALA_WADK_ARTICLE_BY_SLUG_QUERY = `*[_type == "article" && category == "سلة ودك" && slug.current == $slug][0] {
+  _id,
+  title,
+  slug,
+  mainImage,
+  excerpt,
+  publishedAt,
+  body,
+  tags,
+  category,
+  writer-> {
+    name,
+    slug
+  }
+}`
+
+export async function getSalaWadkArticleBySlug(slug: string): Promise<ArticleDetail | null> {
+  try {
+    // Clean the slug - remove any trailing characters and normalize
+    const cleanSlug = slug.trim().replace(/[ىي]$/g, '').replace(/[ىي][ىي]$/g, '')
+    
+    // Try with original slug first
+    let result = await client.fetch<ArticleDetail | null>(SALA_WADK_ARTICLE_BY_SLUG_QUERY, { slug })
+    
+    // If not found, try with cleaned slug
+    if (!result && cleanSlug !== slug) {
+      result = await client.fetch<ArticleDetail | null>(SALA_WADK_ARTICLE_BY_SLUG_QUERY, { slug: cleanSlug })
+    }
+    
+    return result || null
+  } catch (error) {
+    console.error("Error fetching sala wadk article:", error)
+    return null
+  }
+}
+
 const BARID_ARTICLE_BY_SLUG_QUERY = `*[_type == "article" && category == "بريد ودك" && slug.current == $slug][0] {
   _id,
   title,
