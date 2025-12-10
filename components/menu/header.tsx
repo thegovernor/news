@@ -52,44 +52,53 @@ export function Header({ menu }: HeaderProps) {
   }))
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container mx-auto px-4 max-w-7xl">
-        <div className="flex h-16 items-center justify-between">
-          {/* Logo */}
-          <Link 
-            href={menu?.logo?.href ? normalizeHref(menu.logo.href, false) : "/"} 
-            className="flex items-center space-x-2 space-x-reverse"
-          >
-            {menu?.logo?.image ? (
-              <Image
-                src={urlFor(menu.logo.image).width(200).height(80).url()}
-                alt={menu.logo.text || "Logo"}
-                width={200}
-                height={80}
-                className="h-8 w-auto object-contain"
-                style={{ maxHeight: '32px' }}
-              />
-            ) : (
-              <span className="text-xl font-bold">
-                {menu?.logo?.text || "أخبار"}
-              </span>
-            )}
-          </Link>
+    <header className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60">
+      {/* Kuwait flag inspired top border */}
+      <div className="h-1.5 flex">
+        <div className="flex-1 bg-[#007A3D]"></div>
+        <div className="flex-1 bg-white"></div>
+        <div className="flex-1 bg-[#CE1126]"></div>
+        <div className="w-20 bg-black"></div>
+      </div>
+      
+      <div className="border-b border-primary/20">
+        <div className="container mx-auto px-4 max-w-7xl">
+          <div className="flex h-24 items-center justify-between">
+            {/* Logo */}
+            <Link 
+              href={menu?.logo?.href ? normalizeHref(menu.logo.href, false) : "/"} 
+              className="flex items-center space-x-2 space-x-reverse"
+            >
+              {menu?.logo?.image ? (
+                <Image
+                  src={urlFor(menu.logo.image).width(300).height(120).url()}
+                  alt={menu.logo.text || "Logo"}
+                  width={300}
+                  height={120}
+                  className="h-20 w-auto object-contain"
+                  style={{ maxHeight: '80px' }}
+                />
+              ) : (
+                <span className="text-3xl font-bold text-primary">
+                  {menu?.logo?.text || "أخبار"}
+                </span>
+              )}
+            </Link>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-6">
-            {menuItems.map((item, index) => (
-              <Link
-                key={item.href || index}
-                href={item.href}
-                target={item.isExternal ? "_blank" : undefined}
-                rel={item.isExternal ? "noopener noreferrer" : undefined}
-                className="text-sm font-medium transition-colors hover:text-primary"
-              >
-                {item.title}
-              </Link>
-            ))}
-          </nav>
+            {/* Desktop Navigation */}
+            <nav className="hidden md:flex items-center gap-6">
+              {menuItems.map((item, index) => (
+                <Link
+                  key={item.href || index}
+                  href={item.href}
+                  target={item.isExternal ? "_blank" : undefined}
+                  rel={item.isExternal ? "noopener noreferrer" : undefined}
+                  className="text-sm font-medium text-foreground/80 transition-colors hover:text-primary"
+                >
+                  {item.title}
+                </Link>
+              ))}
+            </nav>
 
           {/* Search and Mobile Menu */}
           <div className="flex items-center gap-2">
@@ -123,7 +132,7 @@ export function Header({ menu }: HeaderProps) {
                       href={item.href}
                       target={item.isExternal ? "_blank" : undefined}
                       rel={item.isExternal ? "noopener noreferrer" : undefined}
-                      className="text-lg font-medium transition-colors hover:text-primary"
+                      className="text-lg font-medium text-foreground/80 transition-colors hover:text-primary"
                       onClick={() => setIsOpen(false)}
                     >
                       {item.title}
@@ -131,7 +140,7 @@ export function Header({ menu }: HeaderProps) {
                   ))}
                   
                   {/* Mobile Search */}
-                  <div className="mt-4 pt-4 border-t">
+                  <div className="mt-4 pt-4 border-t border-border">
                     <div className="flex gap-2">
                       <Input
                         type="search"
@@ -148,6 +157,7 @@ export function Header({ menu }: HeaderProps) {
             </Sheet>
           </div>
         </div>
+      </div>
       </div>
     </header>
   )

@@ -14,10 +14,18 @@ interface BaridDetailProps {
   article: ArticleDetail
 }
 
+// Type for Portable Text image value
+interface PortableTextImageValue {
+  asset?: {
+    _ref?: string
+  }
+  alt?: string
+}
+
 // Portable Text components for rendering
 const portableTextComponents = {
   types: {
-    image: ({ value }: { value: any }) => {
+    image: ({ value }: { value: PortableTextImageValue }) => {
       if (!value?.asset?._ref) {
         return null
       }

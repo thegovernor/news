@@ -50,12 +50,20 @@ export function Footer({ menu }: FooterProps) {
   const copyright = menu?.copyright || "جميع الحقوق محفوظة"
 
   return (
-    <footer className="border-t bg-background">
+    <footer className="relative bg-gradient-to-b from-[#f0f0f0] to-[#e0e0e0]">
+      {/* Kuwait flag inspired top border */}
+      <div className="h-2 flex">
+        <div className="flex-1 bg-[#007A3D]"></div>
+        <div className="flex-1 bg-white"></div>
+        <div className="flex-1 bg-[#CE1126]"></div>
+        <div className="w-24 bg-black"></div>
+      </div>
+      
       <div className="container mx-auto px-4 max-w-7xl py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {sections.map((section, sectionIndex) => (
             <div key={section.title || sectionIndex} className="space-y-4">
-              <h3 className="text-lg font-semibold">{section.title}</h3>
+              <h3 className="text-lg font-semibold text-primary">{section.title}</h3>
               <ul className="space-y-2">
                 {section.items.map((item, itemIndex) => (
                   <li key={`${section.title}-${itemIndex}-${item.href || item.title}`}>
@@ -63,7 +71,7 @@ export function Footer({ menu }: FooterProps) {
                       href={item.href}
                       target={item.isExternal ? "_blank" : undefined}
                       rel={item.isExternal ? "noopener noreferrer" : undefined}
-                      className="text-sm text-muted-foreground transition-colors hover:text-primary"
+                      className="text-sm text-muted-foreground transition-colors hover:text-destructive"
                     >
                       {item.title}
                     </Link>
@@ -75,7 +83,7 @@ export function Footer({ menu }: FooterProps) {
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-12 pt-8 border-t">
+        <div className="mt-12 pt-8 border-t-2 border-primary">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             {/* Logo */}
             {menu?.logo && (menu.logo.image || menu.logo.text) && (
@@ -93,7 +101,7 @@ export function Footer({ menu }: FooterProps) {
                     style={{ maxHeight: '40px' }}
                   />
                 ) : (
-                  <span className="text-xl font-bold">
+                  <span className="text-xl font-bold text-primary">
                     {menu.logo.text || "أخبار"}
                   </span>
                 )}
@@ -101,7 +109,7 @@ export function Footer({ menu }: FooterProps) {
             )}
             
             <p className="text-sm text-muted-foreground">
-              © {new Date().getFullYear()} أخبار. {copyright}
+              © {new Date().getFullYear()} أخبار. <span className="text-primary">{copyright}</span>
             </p>
           </div>
         </div>
@@ -109,4 +117,3 @@ export function Footer({ menu }: FooterProps) {
     </footer>
   )
 }
-
