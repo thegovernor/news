@@ -92,14 +92,16 @@ export function Footer({ menu }: FooterProps) {
                 className="inline-flex items-center"
               >
                 {menu.logo.image ? (
-                  <Image
-                    src={urlFor(menu.logo.image).width(200).height(80).url()}
-                    alt={menu.logo.text || "Logo"}
-                    width={200}
-                    height={80}
-                    className="h-10 w-auto object-contain"
-                    style={{ maxHeight: '40px' }}
-                  />
+                  <div className="relative h-16 w-auto">
+                    <Image
+                      src={urlFor(menu.logo.image).width(400).height(160).url()}
+                      alt={menu.logo.text || "Logo"}
+                      width={400}
+                      height={160}
+                      className="h-full w-auto object-contain object-left"
+                      style={{ objectFit: 'contain' }}
+                    />
+                  </div>
                 ) : (
                   <span className="text-xl font-bold text-primary">
                     {menu.logo.text || "أخبار"}
