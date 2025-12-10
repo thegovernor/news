@@ -4,7 +4,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { urlFor } from "@/sanity/lib/image"
 import type { Article } from "@/lib/sanity/queries"
-import { Clock, Mail, User } from "lucide-react"
+import { Clock, User, Mail } from "lucide-react"
 import { getCategoryString } from "@/lib/utils/article"
 
 interface BaridProps {
@@ -14,7 +14,7 @@ interface BaridProps {
 
 export function Barid({ 
   articles = [],
-  title = "سلة ودك"
+  title = "بريد ودك"
 }: BaridProps) {
   return (
     <section className="w-full py-8 md:py-12 bg-muted/30">
@@ -99,7 +99,7 @@ export function Barid({
         ) : (
           <div className="text-center py-16">
             <p className="text-muted-foreground text-lg">
-              لا توجد مقالات في سلة ودك حالياً
+              لا توجد مقالات في بريد ودك حالياً
             </p>
           </div>
         )}

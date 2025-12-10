@@ -23,7 +23,7 @@ const fallbackMenuItems = [
   { title: "الرئيسية", href: "/#hero", order: 0, isExternal: false },
   { title: "التحليل السياسي", href: "/political-analysis", order: 1, isExternal: false },
   { title: "المقالات", href: "/articles", order: 2, isExternal: false },
-  { title: "سلة ودك", href: "/barid", order: 3, isExternal: false },
+  { title: "بريد ودك", href: "/barid", order: 3, isExternal: false },
   { title: "من نحن", href: "/about", order: 4, isExternal: false },
   { title: "اتصل بنا", href: "/contact", order: 5, isExternal: false },
 ]

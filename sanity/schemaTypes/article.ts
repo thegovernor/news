@@ -44,7 +44,7 @@ export default defineType({
         list: [
           { title: 'مقالات', value: 'مقالات' },
           { title: 'تحليلات سياسية', value: 'تحليلات سياسية' },
-          { title: 'سلة ودك', value: 'سلة ودك' },
+          { title: 'بريد ودك', value: 'بريد ودك' },
           { title: 'سياسة', value: 'سياسة' },
           { title: 'رياضة', value: 'رياضة' },
         ],

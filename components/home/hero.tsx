@@ -38,7 +38,7 @@ function getArticleUrl(article: Article): string {
   // Map category values to routes
   if (category === "تحليلات سياسية" || category === "سياسة") {
     return `/political-analysis/${slug}`
-  } else if (category === "سلة ودك") {
+  } else if (category === "بريد ودك") {
     return `/barid/${slug}`
   } else {
     // Default to articles route (مقالات, رياضة, etc.)

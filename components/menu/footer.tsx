@@ -25,7 +25,7 @@ const fallbackSections = [
       { title: "الرئيسية", href: "/#hero", isExternal: false },
       { title: "التحليل السياسي", href: "/political-analysis", isExternal: false },
       { title: "المقالات", href: "/articles", isExternal: false },
-      { title: "سلة ودك", href: "/barid", isExternal: false },
+      { title: "بريد ودك", href: "/barid", isExternal: false },
     ],
   },
   {

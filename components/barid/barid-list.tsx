@@ -59,7 +59,7 @@ export function BaridList({ articles }: BaridListProps) {
               </div>
             </div>
             <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-4 text-white drop-shadow-lg">
-              سلة ودك
+              بريد ودك
             </h1>
             <p className="text-lg md:text-xl text-white/90 max-w-2xl mx-auto drop-shadow-md">
               مجموعة مختارة من أهم الأخبار والتقارير والتحديثات
@@ -156,7 +156,7 @@ export function BaridList({ articles }: BaridListProps) {
           ) : (
             <div className="text-center py-16">
               <p className="text-muted-foreground text-lg">
-                لا توجد مقالات في سلة ودك حالياً
+                لا توجد مقالات في بريد ودك حالياً
               </p>
             </div>
           )}

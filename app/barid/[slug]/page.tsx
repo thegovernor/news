@@ -14,7 +14,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   }
 
   return {
-    title: `${article.title} - سلة ودك - أخبار`,
+    title: `${article.title} - بريد ودك - أخبار`,
     description: article.excerpt || article.title,
   };
 }

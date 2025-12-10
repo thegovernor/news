@@ -2,7 +2,7 @@ import { getBaridArticles } from "@/lib/sanity/queries";
 import { BaridList } from "@/components/barid/barid-list";
 
 export const metadata = {
-  title: "سلة ودك - أخبار",
+  title: "بريد ودك - أخبار",
   description: "مجموعة مختارة من أهم الأخبار والتقارير والتحديثات",
 };
 

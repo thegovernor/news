@@ -178,7 +178,7 @@ export function BaridDetail({ article }: BaridDetailProps) {
             className="inline-flex items-center gap-2 text-primary hover:underline"
           >
             <ArrowRight className="w-4 h-4" />
-            العودة إلى قائمة سلة ودك
+            العودة إلى قائمة بريد ودك
           </Link>
         </div>
       </div>

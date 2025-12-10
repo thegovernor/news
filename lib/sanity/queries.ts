@@ -374,7 +374,7 @@ export async function getArticleBySlug(slug: string): Promise<ArticleDetail | nu
   }
 }
 
-const BARID_ARTICLES_QUERY = `*[_type == "article" && category == "سلة ودك"] | order(publishedAt desc) {
+const BARID_ARTICLES_QUERY = `*[_type == "article" && category == "بريد ودك"] | order(publishedAt desc) {
   _id,
   title,
   slug,
@@ -398,7 +398,7 @@ export async function getBaridArticles(): Promise<Article[]> {
   }
 }
 
-const BARID_ARTICLES_LIMITED_QUERY = `*[_type == "article" && category == "سلة ودك"] | order(publishedAt desc) [0...3] {
+const BARID_ARTICLES_LIMITED_QUERY = `*[_type == "article" && category == "بريد ودك"] | order(publishedAt desc) [0...3] {
   _id,
   title,
   slug,
@@ -422,7 +422,7 @@ export async function getBaridArticlesLimited(): Promise<Article[]> {
   }
 }
 
-const BARID_ARTICLE_BY_SLUG_QUERY = `*[_type == "article" && category == "سلة ودك" && slug.current == $slug][0] {
+const BARID_ARTICLE_BY_SLUG_QUERY = `*[_type == "article" && category == "بريد ودك" && slug.current == $slug][0] {
   _id,
   title,
   slug,
