@@ -1,7 +1,9 @@
 "use client"
 
+import Image from "next/image"
 import { Mail, Phone, MapPin, Twitter, Facebook, Instagram, Linkedin, Youtube, Clock } from "lucide-react"
 import { Card, CardContent } from "@/components/ui/card"
+import { urlFor } from "@/sanity/lib/image"
 import type { ContactContent } from "@/lib/sanity/queries"
 
 interface ContactContentProps {
@@ -12,58 +14,88 @@ export function ContactContent({ contact }: ContactContentProps) {
   return (
     <div className="w-full">
       {/* Hero Section */}
-      <section className="relative w-full h-[50vh] min-h-[400px] md:h-[60vh] bg-gradient-to-br from-primary/90 via-primary/95 to-primary overflow-hidden">
-        {/* Kuwait flag colors overlay */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#007A3D]/20 via-transparent to-[#CE1126]/20"></div>
-        
-        {/* Geometric Square Pattern */}
-        <div 
-          className="absolute inset-0 opacity-15"
-          style={{
-            backgroundImage: `
-              linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px)
-            `,
-            backgroundSize: '60px 60px',
-          }}
-        />
-        
-        {/* Decorative Squares */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-20 left-10 w-32 h-32 border-2 border-white/20 rotate-45"></div>
-          <div className="absolute top-40 right-20 w-24 h-24 border-2 border-white/20 rotate-12"></div>
-          <div className="absolute bottom-32 left-1/4 w-20 h-20 border-2 border-white/20 -rotate-45"></div>
-          <div className="absolute bottom-20 right-1/3 w-28 h-28 border-2 border-white/20 rotate-12"></div>
-          <div className="absolute top-1/3 left-1/3 w-16 h-16 border-2 border-white/20"></div>
-        </div>
-        
-        {/* Subtle Grid Dots */}
-        <div 
-          className="absolute inset-0 opacity-8"
-          style={{
-            backgroundImage: 'radial-gradient(circle, rgba(255, 255, 255, 0.2) 1px, transparent 1px)',
-            backgroundSize: '40px 40px',
-          }}
-        />
-        
-        <div className="container mx-auto px-4 max-w-7xl h-full flex items-center justify-center relative z-10">
-          <div className="text-center">
-            <div className="flex items-center justify-center gap-3 mb-6">
-              <div className="p-3 bg-white/20 backdrop-blur-sm rounded-full border-2 border-white/30 shadow-lg">
-                <Mail className="w-8 h-8 md:w-10 md:h-10 text-white" />
+      {contact.mainImage ? (
+        <section className="relative w-full h-[50vh] min-h-[400px] md:h-[60vh] overflow-hidden">
+          <Image
+            src={urlFor(contact.mainImage).width(1920).height(1080).url()}
+            alt={contact.title}
+            fill
+            className="object-cover"
+            priority
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+          <div className="container mx-auto px-4 max-w-7xl h-full flex items-center justify-center relative z-10">
+            <div className="text-center">
+              <div className="flex items-center justify-center gap-3 mb-6">
+                <div className="p-3 bg-white/20 backdrop-blur-sm rounded-full border-2 border-white/30 shadow-lg">
+                  <Mail className="w-8 h-8 md:w-10 md:h-10 text-white" />
+                </div>
               </div>
+              <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-4 text-white drop-shadow-lg">
+                {contact.title}
+              </h1>
+              {contact.description && (
+                <p className="text-lg md:text-xl text-white/90 max-w-2xl mx-auto drop-shadow-md">
+                  {contact.description}
+                </p>
+              )}
             </div>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-4 text-white drop-shadow-lg">
-              {contact.title}
-            </h1>
-            {contact.description && (
-              <p className="text-lg md:text-xl text-white/90 max-w-2xl mx-auto drop-shadow-md">
-                {contact.description}
-              </p>
-            )}
           </div>
-        </div>
-      </section>
+        </section>
+      ) : (
+        <section className="relative w-full h-[50vh] min-h-[400px] md:h-[60vh] bg-gradient-to-br from-primary/90 via-primary/95 to-primary overflow-hidden">
+          {/* Kuwait flag colors overlay */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#007A3D]/20 via-transparent to-[#CE1126]/20"></div>
+          
+          {/* Geometric Square Pattern */}
+          <div 
+            className="absolute inset-0 opacity-15"
+            style={{
+              backgroundImage: `
+                linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px)
+              `,
+              backgroundSize: '60px 60px',
+            }}
+          />
+          
+          {/* Decorative Squares */}
+          <div className="absolute inset-0 opacity-10">
+            <div className="absolute top-20 left-10 w-32 h-32 border-2 border-white/20 rotate-45"></div>
+            <div className="absolute top-40 right-20 w-24 h-24 border-2 border-white/20 rotate-12"></div>
+            <div className="absolute bottom-32 left-1/4 w-20 h-20 border-2 border-white/20 -rotate-45"></div>
+            <div className="absolute bottom-20 right-1/3 w-28 h-28 border-2 border-white/20 rotate-12"></div>
+            <div className="absolute top-1/3 left-1/3 w-16 h-16 border-2 border-white/20"></div>
+          </div>
+          
+          {/* Subtle Grid Dots */}
+          <div 
+            className="absolute inset-0 opacity-8"
+            style={{
+              backgroundImage: 'radial-gradient(circle, rgba(255, 255, 255, 0.2) 1px, transparent 1px)',
+              backgroundSize: '40px 40px',
+            }}
+          />
+          
+          <div className="container mx-auto px-4 max-w-7xl h-full flex items-center justify-center relative z-10">
+            <div className="text-center">
+              <div className="flex items-center justify-center gap-3 mb-6">
+                <div className="p-3 bg-white/20 backdrop-blur-sm rounded-full border-2 border-white/30 shadow-lg">
+                  <Mail className="w-8 h-8 md:w-10 md:h-10 text-white" />
+                </div>
+              </div>
+              <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-4 text-white drop-shadow-lg">
+                {contact.title}
+              </h1>
+              {contact.description && (
+                <p className="text-lg md:text-xl text-white/90 max-w-2xl mx-auto drop-shadow-md">
+                  {contact.description}
+                </p>
+              )}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Contact Information Section */}
       <section className="w-full py-12 md:py-16 bg-background">

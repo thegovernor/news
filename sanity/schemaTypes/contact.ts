@@ -13,6 +13,14 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: 'mainImage',
+      title: 'الصورة الرئيسية',
+      type: 'image',
+      options: {
+        hotspot: true,
+      },
+    }),
+    defineField({
       name: 'description',
       title: 'الوصف',
       type: 'text',
@@ -108,6 +116,7 @@ export default defineType({
   preview: {
     select: {
       title: 'title',
+      media: 'mainImage',
     },
   },
 })

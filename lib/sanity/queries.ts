@@ -592,6 +592,7 @@ export async function getAbout(): Promise<AboutContent | null> {
 export interface ContactContent {
   _id: string
   title: string
+  mainImage?: SanityImageSource
   description?: string
   email?: string
   phone?: string
@@ -616,6 +617,7 @@ export interface ContactContent {
 const CONTACT_QUERY = `*[_type == "contact"][0] {
   _id,
   title,
+  mainImage,
   description,
   email,
   phone,

@@ -3,14 +3,13 @@
 import * as React from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { Menu, Search } from "lucide-react"
+import { Menu } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
   Sheet,
   SheetContent,
   SheetTrigger,
 } from "@/components/ui/sheet"
-import { Input } from "@/components/ui/input"
 import { urlFor } from "@/sanity/lib/image"
 import type { HeaderMenu } from "@/lib/sanity/queries"
 
@@ -56,9 +55,8 @@ export function Header({ menu }: HeaderProps) {
       {/* Kuwait flag inspired top border */}
       <div className="h-1.5 flex">
         <div className="flex-1 bg-[#007A3D]"></div>
-        <div className="flex-1 bg-white"></div>
         <div className="flex-1 bg-[#CE1126]"></div>
-        <div className="w-20 bg-black"></div>
+        <div className="w-40 bg-black"></div>
       </div>
       
       <div className="border-b border-primary/20">
@@ -100,19 +98,8 @@ export function Header({ menu }: HeaderProps) {
               ))}
             </nav>
 
-          {/* Search and Mobile Menu */}
+          {/* Mobile Menu */}
           <div className="flex items-center gap-2">
-            {/* Search Button */}
-            <Button
-              variant="ghost"
-              size="icon"
-              className="hidden md:flex"
-              aria-label="Search"
-            >
-              <Search className="h-5 w-5" />
-            </Button>
-
-            {/* Mobile Menu */}
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
               <SheetTrigger asChild>
                 <Button
@@ -138,20 +125,6 @@ export function Header({ menu }: HeaderProps) {
                       {item.title}
                     </Link>
                   ))}
-                  
-                  {/* Mobile Search */}
-                  <div className="mt-4 pt-4 border-t border-border">
-                    <div className="flex gap-2">
-                      <Input
-                        type="search"
-                        placeholder="بحث..."
-                        className="flex-1"
-                      />
-                      <Button size="icon" variant="outline">
-                        <Search className="h-4 w-4" />
-                      </Button>
-                    </div>
-                  </div>
                 </div>
               </SheetContent>
             </Sheet>
