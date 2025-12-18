@@ -51,7 +51,7 @@ export function Header({ menu }: HeaderProps) {
   }))
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60">
+    <header className="sticky top-0 z-50 w-full bg-white">
       {/* Kuwait flag inspired top border */}
       <div className="h-1.5 flex">
         <div className="flex-1 bg-[#007A3D]"></div>

@@ -64,7 +64,7 @@ export function Footer({ menu }: FooterProps) {
   }
 
   return (
-    <footer className="relative bg-gradient-to-b from-[#f0f0f0] to-[#e0e0e0]">
+    <footer className="relative bg-white">
       {/* Kuwait flag inspired top border */}
       <div className="h-2 flex">
         <div className="flex-1 bg-[#007A3D]"></div>
