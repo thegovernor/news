@@ -19,18 +19,6 @@ export default defineConfig({
   dataset,
   // Add and edit the content schema in the './sanity/schemaTypes' folder
   schema,
-  document: {
-    actions: (prev, context) => {
-      // Remove create action for categories
-      if (context.schemaType === 'category') {
-        return prev.filter((action) => {
-          // Keep all actions except create, duplicate, and delete
-          return action.action !== 'create' && action.action !== 'duplicate' && action.action !== 'delete'
-        })
-      }
-      return prev
-    },
-  },
   plugins: [
     structureTool({structure}),
     // Vision is for querying with GROQ from inside the Studio
