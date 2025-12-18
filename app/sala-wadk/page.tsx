@@ -1,4 +1,4 @@
-import { getSalaWadkArticles } from "@/lib/sanity/queries";
+import { getSalaWadkArticles, getCategoryByTitle } from "@/lib/sanity/queries";
 import { SalaWadkList } from "@/components/sala-wadk/sala-wadk-list";
 
 export const metadata = {
@@ -7,11 +7,14 @@ export const metadata = {
 };
 
 export default async function SalaWadkPage() {
-  const articles = await getSalaWadkArticles();
+  const [articles, category] = await Promise.all([
+    getSalaWadkArticles(),
+    getCategoryByTitle("سلة ودك"),
+  ]);
 
   return (
     <main className="min-h-screen bg-background">
-      <SalaWadkList articles={articles} />
+      <SalaWadkList articles={articles} category={category} />
     </main>
   );
 }

@@ -59,7 +59,7 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
 // Portable Text components for rendering
 const portableTextComponents = {
   types: {
-    image: ({ value }: { value: any }) => {
+    image: ({ value }: { value: { asset?: { _ref?: string }; alt?: string } }) => {
       if (!value?.asset?._ref) {
         return null
       }

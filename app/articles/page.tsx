@@ -1,4 +1,4 @@
-import { getAllArticles } from "@/lib/sanity/queries";
+import { getAllArticles, getCategoryByTitle } from "@/lib/sanity/queries";
 import { ArticlesList } from "@/components/articles/articles-list";
 
 export const metadata = {
@@ -7,11 +7,14 @@ export const metadata = {
 };
 
 export default async function ArticlesPage() {
-  const articles = await getAllArticles();
+  const [articles, category] = await Promise.all([
+    getAllArticles(),
+    getCategoryByTitle("مقالات"),
+  ]);
 
   return (
     <main className="min-h-screen bg-background">
-      <ArticlesList articles={articles} />
+      <ArticlesList articles={articles} category={category} />
     </main>
   );
 }

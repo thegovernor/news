@@ -26,7 +26,7 @@ export const structure: StructureResolver = (S) =>
                 .child(
                   S.documentList()
                     .title('مقالات')
-                    .filter('_type == "article" && category == "مقالات"')
+                    .filter('_type == "article" && category->title == "مقالات"')
                     .defaultOrdering([{field: 'publishedAt', direction: 'desc'}])
                 ),
               S.listItem()
@@ -34,7 +34,7 @@ export const structure: StructureResolver = (S) =>
                 .child(
                   S.documentList()
                     .title('تحليلات سياسية')
-                    .filter('_type == "article" && category == "تحليلات سياسية"')
+                    .filter('_type == "article" && category->title == "تحليلات سياسية"')
                     .defaultOrdering([{field: 'publishedAt', direction: 'desc'}])
                 ),
               S.listItem()
@@ -42,7 +42,7 @@ export const structure: StructureResolver = (S) =>
                 .child(
                   S.documentList()
                     .title('بريد ودك')
-                    .filter('_type == "article" && category == "بريد ودك"')
+                    .filter('_type == "article" && category->title == "بريد ودك"')
                     .defaultOrdering([{field: 'publishedAt', direction: 'desc'}])
                 ),
               S.listItem()
@@ -50,7 +50,7 @@ export const structure: StructureResolver = (S) =>
                 .child(
                   S.documentList()
                     .title('سلة ودك')
-                    .filter('_type == "article" && category == "سلة ودك"')
+                    .filter('_type == "article" && category->title == "سلة ودك"')
                     .defaultOrdering([{field: 'publishedAt', direction: 'desc'}])
                 ),
             ])

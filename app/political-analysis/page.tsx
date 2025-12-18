@@ -1,4 +1,4 @@
-import { getPoliticalAnalysisArticles } from "@/lib/sanity/queries";
+import { getPoliticalAnalysisArticles, getCategoryByTitle } from "@/lib/sanity/queries";
 import { PoliticalAnalysisArticlesList } from "@/components/political-analysis/articles-list";
 
 export const metadata = {
@@ -7,11 +7,14 @@ export const metadata = {
 };
 
 export default async function PoliticalAnalysisPage() {
-  const articles = await getPoliticalAnalysisArticles();
+  const [articles, category] = await Promise.all([
+    getPoliticalAnalysisArticles(),
+    getCategoryByTitle("تحليلات سياسية"),
+  ]);
 
   return (
     <main className="min-h-screen bg-background">
-      <PoliticalAnalysisArticlesList articles={articles} />
+      <PoliticalAnalysisArticlesList articles={articles} category={category} />
     </main>
   );
 }

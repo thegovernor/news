@@ -1,4 +1,4 @@
-import { getBaridArticles } from "@/lib/sanity/queries";
+import { getBaridArticles, getCategoryByTitle } from "@/lib/sanity/queries";
 import { BaridList } from "@/components/barid/barid-list";
 
 export const metadata = {
@@ -7,11 +7,14 @@ export const metadata = {
 };
 
 export default async function BaridPage() {
-  const articles = await getBaridArticles();
+  const [articles, category] = await Promise.all([
+    getBaridArticles(),
+    getCategoryByTitle("بريد ودك"),
+  ]);
 
   return (
     <main className="min-h-screen bg-background">
-      <BaridList articles={articles} />
+      <BaridList articles={articles} category={category} />
     </main>
   );
 }

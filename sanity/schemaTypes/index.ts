@@ -7,7 +7,8 @@ import contact from './contact'
 import headerMenu from './header-menu'
 import footerMenu from './footer-menu'
 import rssFeed from './rss-feed'
+import category from './category'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
-  types: [article, writer, tweet, about, contact, headerMenu, footerMenu, rssFeed],
+  types: [article, writer, tweet, about, contact, headerMenu, footerMenu, rssFeed, category],
 }

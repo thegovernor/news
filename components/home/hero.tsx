@@ -21,7 +21,12 @@ const FEATURED_ARTICLES_QUERY = `*[_type == "article" && featured == true] | ord
   mainImage,
   excerpt,
   publishedAt,
-  category,
+  category-> {
+    _id,
+    title,
+    slug,
+    image
+  },
   writer-> {
     name,
     slug
@@ -40,6 +45,8 @@ function getArticleUrl(article: Article): string {
     return `/political-analysis/${slug}`
   } else if (category === "بريد ودك") {
     return `/barid/${slug}`
+  } else if (category === "سلة ودك") {
+    return `/sala-wadk/${slug}`
   } else {
     // Default to articles route (مقالات, رياضة, etc.)
     return `/articles/${slug}`
@@ -220,7 +227,7 @@ export function Hero({ articles: initialArticles }: HeroProps) {
 
               {/* Desktop: Vertical Scrollable Stack */}
               <div className="hidden lg:block overflow-y-auto max-h-[calc(100vh-200px)] scrollbar-hide space-y-0 pr-2">
-                {sidebarArticles.map((article, index) => (
+                {sidebarArticles.map((article) => (
                   <Link
                     key={article._id}
                     href={getArticleUrl(article)}
