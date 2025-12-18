@@ -56,8 +56,30 @@ export const structure: StructureResolver = (S) =>
             ])
         ),
       S.divider(),
-      // Other document types
+      // Categories - Read-only (no creation allowed)
+      S.listItem()
+        .title('الفئات')
+        .child(
+          S.documentList()
+            .title('الفئات')
+            .filter('_type == "category"')
+            .defaultOrdering([{field: 'title', direction: 'asc'}])
+            .canHandleIntent((intentName, params) => {
+              // Block create and delete intents
+              if (intentName === 'create' && params?.type === 'category') {
+                return false
+              }
+              if (intentName === 'delete' && params?.type === 'category') {
+                return false
+              }
+              // Allow edit and view
+              return true
+            })
+            .initialValueTemplates([]) // Remove create button by providing no templates
+        ),
+      S.divider(),
+      // Other document types (excluding article and category)
       ...S.documentTypeListItems().filter(
-        (listItem) => !['article'].includes(listItem.getId() || '')
+        (listItem) => !['article', 'category'].includes(listItem.getId() || '')
       ),
     ])
