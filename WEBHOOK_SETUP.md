@@ -133,3 +133,4 @@ https://www.wadkuwait.com/api/revalidate?secret=nsmUCmNiWc1vkP40Mr3GhZKv4
 
 If you prefer tag-based revalidation instead of path-based, you can modify the webhook handler to use `revalidateTag()` instead. This requires updating your queries to use tags, which provides more granular control over what gets revalidated.
 
+

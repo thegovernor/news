@@ -5,35 +5,13 @@ import Link from "next/link"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { urlFor } from "@/sanity/lib/image"
-import { client } from "@/sanity/lib/client"
-import { useEffect, useState } from "react"
 import type { Article } from "@/lib/sanity/queries"
 import { Clock, User } from "lucide-react"
+import { getCategoryString } from "@/lib/utils/article"
 
 interface HeroProps {
-  articles?: Article[]
+  articles: Article[]
 }
-
-const FEATURED_ARTICLES_QUERY = `*[_type == "article" && featured == true] | order(publishedAt desc) [0...20] {
-  _id,
-  title,
-  slug,
-  mainImage,
-  excerpt,
-  publishedAt,
-  category-> {
-    _id,
-    title,
-    slug,
-    image
-  },
-  writer-> {
-    name,
-    slug
-  }
-}`
-
-import { getCategoryString } from "@/lib/utils/article"
 
 // Helper function to get article URL based on category
 function getArticleUrl(article: Article): string {
@@ -53,49 +31,7 @@ function getArticleUrl(article: Article): string {
   }
 }
 
-export function Hero({ articles: initialArticles }: HeroProps) {
-  const [articles, setArticles] = useState<Article[]>(initialArticles || [])
-  const [loading, setLoading] = useState(!initialArticles)
-
-  useEffect(() => {
-    if (!initialArticles) {
-      const fetchArticles = async () => {
-        try {
-          const data = await client.fetch<Article[]>(FEATURED_ARTICLES_QUERY)
-          setArticles(data)
-        } catch (error) {
-          console.error("Error fetching featured articles:", error)
-        } finally {
-          setLoading(false)
-        }
-      }
-      fetchArticles()
-    }
-  }, [initialArticles])
-
-  if (loading) {
-    return (
-      <section className="w-full py-12">
-        <div className="container mx-auto px-4 max-w-7xl">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <div className="lg:col-span-2">
-              <Card className="animate-pulse">
-                <div className="aspect-video w-full bg-muted" />
-              </Card>
-            </div>
-            <div className="space-y-6">
-              {[...Array(4)].map((_, i) => (
-                <Card key={i} className="animate-pulse">
-                  <div className="aspect-video w-full bg-muted" />
-                </Card>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-    )
-  }
-
+export function Hero({ articles }: HeroProps) {
   if (articles.length === 0) {
     return (
       <section className="w-full py-12">
@@ -122,22 +58,32 @@ export function Hero({ articles: initialArticles }: HeroProps) {
             <div className="lg:col-span-2 flex">
               <Link href={getArticleUrl(featuredArticle)} className="flex-1 flex flex-col w-full">
                 <Card className="group flex-1 overflow-hidden border-0 shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer rounded-none flex flex-col min-h-full">
-                  <div className="relative w-full flex-1 overflow-hidden min-h-[300px] lg:min-h-0">
-                    <Image
-                      src={urlFor(featuredArticle.mainImage)
-                        .width(1200)
-                        .height(750)
-                        .url()}
-                      alt={featuredArticle.title}
-                      fill
-                      className="object-cover transition-transform duration-700 group-hover:scale-105"
-                      priority
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+                  <div className="relative w-full flex-1 overflow-hidden min-h-[300px] lg:min-h-0 bg-muted">
+                    {featuredArticle.mainImage ? (
+                      <>
+                        <Image
+                          src={urlFor(featuredArticle.mainImage)
+                            .width(1200)
+                            .height(750)
+                            .url()}
+                          alt={featuredArticle.title}
+                          fill
+                          className="object-cover transition-transform duration-700 group-hover:scale-105"
+                          priority
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+                      </>
+                    ) : (
+                      <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/5" />
+                    )}
                     
                     {/* Content Overlay with Glassmorphism */}
                     <div className="absolute inset-0 flex flex-col justify-end p-4 md:p-6 lg:p-8 xl:p-10">
-                      <div className="max-w-2xl backdrop-blur-md bg-white/10 dark:bg-black/20 border border-white/20 rounded-2xl p-4 md:p-6 lg:p-8 shadow-2xl">
+                      <div className={`max-w-2xl backdrop-blur-md border rounded-2xl p-4 md:p-6 lg:p-8 shadow-2xl ${
+                        featuredArticle.mainImage 
+                          ? 'bg-white/10 dark:bg-black/20 border-white/20' 
+                          : 'bg-background/95 border-border'
+                      }`}>
                         <div className="flex items-center gap-2 md:gap-3 mb-3 md:mb-4 flex-wrap">
                           <Badge 
                             variant="secondary" 
@@ -145,28 +91,40 @@ export function Hero({ articles: initialArticles }: HeroProps) {
                           >
                             {getCategoryString(featuredArticle.category)}
                           </Badge>
-                          <div className="flex items-center gap-1 md:gap-1.5 text-xs md:text-sm text-white/95 backdrop-blur-sm">
-                            <User className="w-3 h-3 md:w-4 md:h-4" />
-                            <span>{featuredArticle.writer.name}</span>
-                          </div>
-                          <div className="flex items-center gap-1 md:gap-1.5 text-xs md:text-sm text-white/95 backdrop-blur-sm">
-                            <Clock className="w-3 h-3 md:w-4 md:h-4" />
-                            <span>
-                              {new Date(featuredArticle.publishedAt).toLocaleDateString("ar-SA", {
-                                year: "numeric",
-                                month: "long",
-                                day: "numeric",
-                              })}
-                            </span>
-                          </div>
+                          {featuredArticle.writer?.name && (
+                            <div className={`flex items-center gap-1 md:gap-1.5 text-xs md:text-sm backdrop-blur-sm ${
+                              featuredArticle.mainImage ? 'text-white/95' : 'text-foreground'
+                            }`}>
+                              <User className="w-3 h-3 md:w-4 md:h-4" />
+                              <span>{featuredArticle.writer.name}</span>
+                            </div>
+                          )}
+                          {featuredArticle.publishedAt && (
+                            <div className={`flex items-center gap-1 md:gap-1.5 text-xs md:text-sm backdrop-blur-sm ${
+                              featuredArticle.mainImage ? 'text-white/95' : 'text-foreground'
+                            }`}>
+                              <Clock className="w-3 h-3 md:w-4 md:h-4" />
+                              <span>
+                                {new Date(featuredArticle.publishedAt).toLocaleDateString("ar-SA", {
+                                  year: "numeric",
+                                  month: "long",
+                                  day: "numeric",
+                                })}
+                              </span>
+                            </div>
+                          )}
                         </div>
                         
-                        <h1 className="text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold mb-2 md:mb-3 leading-tight line-clamp-2 md:line-clamp-3 text-white drop-shadow-lg">
+                        <h1 className={`text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold mb-2 md:mb-3 leading-tight line-clamp-2 md:line-clamp-3 ${
+                          featuredArticle.mainImage ? 'text-white drop-shadow-lg' : 'text-foreground'
+                        }`}>
                           {featuredArticle.title}
                         </h1>
                         
                         {featuredArticle.excerpt && (
-                          <p className="text-xs md:text-sm lg:text-base text-white/95 line-clamp-2 hidden md:block drop-shadow-md">
+                          <p className={`text-xs md:text-sm lg:text-base line-clamp-2 hidden md:block ${
+                            featuredArticle.mainImage ? 'text-white/95 drop-shadow-md' : 'text-muted-foreground'
+                          }`}>
                             {featuredArticle.excerpt}
                           </p>
                         )}
@@ -184,7 +142,7 @@ export function Hero({ articles: initialArticles }: HeroProps) {
               {/* Mobile: Horizontal Scroll */}
               <div className="lg:hidden overflow-x-auto pb-2 -mx-4 px-4 scrollbar-hide">
                 <div className="flex gap-3 min-w-max">
-                  {sidebarArticles.map((article) => (
+                  {sidebarArticles.filter(article => article.mainImage).map((article) => (
                     <Link
                       key={article._id}
                       href={getArticleUrl(article)}
@@ -212,12 +170,14 @@ export function Hero({ articles: initialArticles }: HeroProps) {
                           <h3 className="text-sm font-bold mb-2 line-clamp-2 group-hover:text-primary transition-colors leading-snug">
                             {article.title}
                           </h3>
-                          <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                            <div className="flex items-center gap-1">
-                              <User className="w-3 h-3" />
-                              <span className="truncate">{article.writer.name}</span>
+                          {article.writer?.name && (
+                            <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                              <div className="flex items-center gap-1">
+                                <User className="w-3 h-3" />
+                                <span className="truncate">{article.writer.name}</span>
+                              </div>
                             </div>
-                          </div>
+                          )}
                         </CardContent>
                       </Card>
                     </Link>
@@ -227,7 +187,7 @@ export function Hero({ articles: initialArticles }: HeroProps) {
 
               {/* Desktop: Vertical Scrollable Stack */}
               <div className="hidden lg:block overflow-y-auto max-h-[calc(100vh-200px)] scrollbar-hide space-y-0 pr-2">
-                {sidebarArticles.map((article) => (
+                {sidebarArticles.filter(article => article.mainImage).map((article) => (
                   <Link
                     key={article._id}
                     href={getArticleUrl(article)}
@@ -263,19 +223,23 @@ export function Hero({ articles: initialArticles }: HeroProps) {
                           </div>
                           
                           <div className="flex items-center gap-3 text-xs text-muted-foreground mt-2">
-                            <div className="flex items-center gap-1">
-                              <User className="w-3 h-3" />
-                              <span className="truncate">{article.writer.name}</span>
-                            </div>
-                            <div className="flex items-center gap-1 flex-shrink-0">
-                              <Clock className="w-3 h-3" />
-                              <span>
-                                {new Date(article.publishedAt).toLocaleDateString("ar-SA", {
-                                  month: "short",
-                                  day: "numeric",
-                                })}
-                              </span>
-                            </div>
+                            {article.writer?.name && (
+                              <div className="flex items-center gap-1">
+                                <User className="w-3 h-3" />
+                                <span className="truncate">{article.writer.name}</span>
+                              </div>
+                            )}
+                            {article.publishedAt && (
+                              <div className="flex items-center gap-1 flex-shrink-0">
+                                <Clock className="w-3 h-3" />
+                                <span>
+                                  {new Date(article.publishedAt).toLocaleDateString("ar-SA", {
+                                    month: "short",
+                                    day: "numeric",
+                                  })}
+                                </span>
+                              </div>
+                            )}
                           </div>
                         </CardContent>
                       </div>
