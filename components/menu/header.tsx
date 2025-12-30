@@ -61,21 +61,25 @@ export function Header({ menu }: HeaderProps) {
       
       <div className="border-b border-primary/20">
         <div className="container mx-auto px-4 max-w-7xl">
-          <div className="flex h-24 items-center justify-between">
+          <div className="flex h-20 md:h-28 items-center justify-between">
             {/* Logo */}
             <Link 
               href={menu?.logo?.href ? normalizeHref(menu.logo.href, false) : "/"} 
               className="flex items-center space-x-2 space-x-reverse"
             >
               {menu?.logo?.image ? (
-                <Image
-                  src={urlFor(menu.logo.image).width(300).height(120).url()}
-                  alt={menu.logo.text || "Logo"}
-                  width={300}
-                  height={120}
-                  className="h-20 w-auto object-contain"
-                  style={{ maxHeight: '80px' }}
-                />
+                <div className="relative h-20 md:h-28 w-auto max-w-[180px] bg-transparent">
+                  <Image
+                    src={urlFor(menu.logo.image).width(500).height(400).format('png').url()}
+                    alt={menu.logo.text || "Logo"}
+                    width={500}
+                    height={400}
+                    className="h-full w-auto object-contain"
+                    style={{ objectFit: 'contain' }}
+                    unoptimized={true}
+                    priority
+                  />
+                </div>
               ) : (
                 <span className="text-3xl font-bold text-primary">
                   {menu?.logo?.text || "أخبار"}
@@ -91,7 +95,7 @@ export function Header({ menu }: HeaderProps) {
                   href={item.href}
                   target={item.isExternal ? "_blank" : undefined}
                   rel={item.isExternal ? "noopener noreferrer" : undefined}
-                  className="text-sm font-medium text-foreground/80 transition-colors hover:text-primary"
+                  className="text-sm md:text-base font-medium text-foreground/80 transition-colors hover:text-primary"
                 >
                   {item.title}
                 </Link>
@@ -119,7 +123,7 @@ export function Header({ menu }: HeaderProps) {
                       href={item.href}
                       target={item.isExternal ? "_blank" : undefined}
                       rel={item.isExternal ? "noopener noreferrer" : undefined}
-                      className="text-lg font-medium text-foreground/80 transition-colors hover:text-primary"
+                      className="text-sm md:text-base font-medium text-foreground/80 transition-colors hover:text-primary"
                       onClick={() => setIsOpen(false)}
                     >
                       {item.title}

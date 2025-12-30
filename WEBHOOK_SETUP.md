@@ -38,7 +38,7 @@ Replace:
 
 **Example:**
 ```
-https://my-news-site.vercel.app/api/revalidate?secret=abc123xyz789
+https://www.wadkuwait.com/api/revalidate?secret=nsmUCmNiWc1vkP40Mr3GhZKv4
 ```
 
 ## Step 3: Configure the Webhook in Sanity

@@ -3,6 +3,7 @@ import { Tajawal, IBM_Plex_Sans_Arabic } from "next/font/google";
 import "./globals.css";
 import { LayoutWrapper } from "@/components/menu/layout-wrapper";
 import { getHeaderMenu, getFooterMenu } from "@/lib/sanity/queries";
+import { urlFor } from "@/sanity/lib/image";
 
 const tajawal = Tajawal({
   variable: "--font-arabic-sans",
@@ -16,10 +17,34 @@ const ibmPlexArabic = IBM_Plex_Sans_Arabic({
   weight: ["100", "200", "300", "400", "500", "600", "700"],
 });
 
-export const metadata: Metadata = {
-  title: "أخبار - موقع الأخبار العربي",
-  description: "موقع الأخبار العربي - آخر الأخبار والتحديثات",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const headerMenu = await getHeaderMenu();
+  
+  const faviconUrl = headerMenu?.logo?.image
+    ? urlFor(headerMenu.logo.image).width(32).height(32).format('png').url()
+    : undefined;
+  
+  const appleIconUrl = headerMenu?.logo?.image
+    ? urlFor(headerMenu.logo.image).width(180).height(180).format('png').url()
+    : undefined;
+
+  return {
+    title: "الوطنية الدستورية الكويتيه",
+    description: "موقع الأخبار العربي - آخر الأخبار والتحديثات",
+    icons: faviconUrl
+      ? {
+          icon: [
+            { url: faviconUrl, sizes: "32x32", type: "image/png" },
+            { url: faviconUrl, sizes: "16x16", type: "image/png" },
+          ],
+          apple: appleIconUrl
+            ? [{ url: appleIconUrl, sizes: "180x180", type: "image/png" }]
+            : undefined,
+          shortcut: faviconUrl,
+        }
+      : undefined,
+  };
+}
 
 export default async function RootLayout({
   children,
