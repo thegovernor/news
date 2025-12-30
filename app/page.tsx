@@ -7,6 +7,9 @@ import { Articles } from "@/components/home/articles";
 import { Tweets } from "@/components/home/tweets";
 import { getFeaturedArticles, getBreakingNews, getArticles, getTweets, getPoliticalAnalysisArticlesLimited, getBaridArticlesLimited, getSalaWadkArticlesLimited } from "@/lib/sanity/queries";
 
+// Revalidate every 60 seconds
+export const revalidate = 60;
+
 export default async function Home() {
   const articles = await getFeaturedArticles();
   const breakingNews = await getBreakingNews();

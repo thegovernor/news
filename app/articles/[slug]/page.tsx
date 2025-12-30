@@ -2,6 +2,9 @@ import { getArticleBySlug } from "@/lib/sanity/queries";
 import { ArticleDetail } from "@/components/articles/article-detail";
 import { notFound } from "next/navigation";
 
+// Revalidate every 60 seconds
+export const revalidate = 60;
+
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const decodedSlug = decodeURIComponent(slug);

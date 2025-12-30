@@ -2,6 +2,9 @@ import { getBaridArticleBySlug } from "@/lib/sanity/queries";
 import { BaridDetail } from "@/components/barid/barid-detail";
 import { notFound } from "next/navigation";
 
+// Revalidate every 60 seconds
+export const revalidate = 60;
+
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const decodedSlug = decodeURIComponent(slug);

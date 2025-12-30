@@ -6,6 +6,9 @@ export const metadata = {
   description: "جميع المقالات والأخبار والتقارير الإخبارية",
 };
 
+// Revalidate every 60 seconds
+export const revalidate = 60;
+
 export default async function ArticlesPage() {
   const [articles, category] = await Promise.all([
     getAllArticles(),

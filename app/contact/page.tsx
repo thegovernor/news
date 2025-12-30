@@ -2,6 +2,9 @@ import { getContact } from "@/lib/sanity/queries";
 import { ContactContent } from "@/components/contact/contact-content";
 import { notFound } from "next/navigation";
 
+// Revalidate every 60 seconds
+export const revalidate = 60;
+
 export async function generateMetadata() {
   const contact = await getContact();
   

@@ -6,6 +6,9 @@ export const metadata = {
   description: "مجموعة مختارة من أهم الأخبار والتقارير والتحديثات",
 };
 
+// Revalidate every 60 seconds
+export const revalidate = 60;
+
 export default async function BaridPage() {
   const [articles, category] = await Promise.all([
     getBaridArticles(),

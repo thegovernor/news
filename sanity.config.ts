@@ -1,7 +1,7 @@
-'use client'
-
 /**
- * This configuration is used to for the Sanity Studio that's mounted on the `/app/studio/[[...tool]]/page.tsx` route
+ * This configuration is used for both:
+ * - The Sanity Studio mounted on `/app/studio/[[...tool]]/page.tsx` route (Next.js)
+ * - Standalone Studio deployment via `sanity deploy`
  */
 
 import {visionTool} from '@sanity/vision'
@@ -12,14 +12,19 @@ import {structureTool} from 'sanity/structure'
 import {apiVersion, dataset, projectId} from './sanity/env'
 import {schema} from './sanity/schemaTypes'
 import {structure} from './sanity/structure'
+import {rtlSupport} from './sanity/plugins/rtl-support'
 
 export default defineConfig({
-  basePath: '/studio',
+  // For Next.js embedded Studio, basePath is '/studio'
+  // For standalone deployment, you can override by setting SANITY_STUDIO_BASE_PATH env var
+  basePath: process.env.SANITY_STUDIO_BASE_PATH || '/studio',
   projectId,
   dataset,
   // Add and edit the content schema in the './sanity/schemaTypes' folder
   schema,
+  // RTL support is handled by the rtlSupport plugin
   plugins: [
+    rtlSupport(),
     structureTool({structure}),
     // Vision is for querying with GROQ from inside the Studio
     // https://www.sanity.io/docs/the-vision-plugin

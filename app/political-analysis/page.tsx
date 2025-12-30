@@ -6,6 +6,9 @@ export const metadata = {
   description: "جميع مقالات التحليلات السياسية",
 };
 
+// Revalidate every 60 seconds
+export const revalidate = 60;
+
 export default async function PoliticalAnalysisPage() {
   const [articles, category] = await Promise.all([
     getPoliticalAnalysisArticles(),

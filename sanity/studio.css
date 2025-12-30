@@ -1,0 +1,35 @@
+/* RTL Support for Sanity Studio */
+html {
+  direction: rtl !important;
+  text-align: right !important;
+}
+
+body {
+  direction: rtl !important;
+}
+
+/* Ensure Sanity Studio components respect RTL */
+[data-ui="Pane"],
+[data-ui="PaneContent"],
+[data-ui="PaneHeader"],
+[data-ui="PaneFooter"] {
+  direction: rtl !important;
+}
+
+/* Fix any LTR-specific styles */
+[dir="ltr"] {
+  direction: rtl !important;
+}
+
+/* Ensure the main studio container is RTL */
+[data-testid="studio-layout"],
+[data-testid="default-layout"] {
+  direction: rtl !important;
+}
+
+/* Fix sidebar and navigation */
+[data-ui="Sidebar"],
+[data-ui="Navbar"] {
+  direction: rtl !important;
+}
+
