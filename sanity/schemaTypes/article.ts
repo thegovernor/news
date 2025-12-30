@@ -34,14 +34,12 @@ export default defineType({
       title: 'الكاتب',
       type: 'reference',
       to: [{type: 'writer'}],
-      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'category',
       title: 'الفئة',
       type: 'reference',
       to: [{type: 'category'}],
-      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'mainImage',
@@ -50,7 +48,6 @@ export default defineType({
       options: {
         hotspot: true,
       },
-      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'excerpt',
@@ -62,7 +59,6 @@ export default defineType({
       name: 'publishedAt',
       title: 'تاريخ النشر',
       type: 'datetime',
-      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'body',
@@ -83,7 +79,6 @@ export default defineType({
           ],
         },
       ],
-      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'tags',
