@@ -1,0 +1,1536 @@
+[
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "title",
+        "type": "string",
+        "title": "العنوان"
+      },
+      {
+        "options": {
+          "source": "title",
+          "maxLength": 96
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "custom"
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "slug",
+        "type": "slug",
+        "title": "الرابط"
+      },
+      {
+        "to": [
+          {
+            "type": "writer"
+          }
+        ],
+        "name": "writer",
+        "type": "reference",
+        "title": "الكاتب"
+      },
+      {
+        "to": [
+          {
+            "type": "category"
+          }
+        ],
+        "name": "category",
+        "type": "reference",
+        "title": "الفئة"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "mainImage",
+        "type": "image",
+        "title": "الصورة الرئيسية"
+      },
+      {
+        "description": "ملخص قصير للمقال",
+        "name": "excerpt",
+        "type": "text",
+        "title": "الملخص"
+      },
+      {
+        "name": "publishedAt",
+        "type": "datetime",
+        "title": "تاريخ النشر"
+      },
+      {
+        "of": [
+          {
+            "marks": {
+              "annotations": [
+                {
+                  "i18nTitleKey": "inputs.portable-text.annotation.link",
+                  "options": {
+                    "modal": {
+                      "type": "popover"
+                    }
+                  },
+                  "fields": [
+                    {
+                      "validation": [
+                        {
+                          "rules": [
+                            {
+                              "flag": "uri",
+                              "constraint": {
+                                "options": {
+                                  "scheme": [
+                                    "/^http$/",
+                                    "/^https$/",
+                                    "/^tel$/",
+                                    "/^mailto$/"
+                                  ],
+                                  "allowRelative": true,
+                                  "relativeOnly": false,
+                                  "allowCredentials": false
+                                }
+                              }
+                            }
+                          ],
+                          "level": "error"
+                        }
+                      ],
+                      "description": "A valid web, email, phone, or relative link.",
+                      "name": "href",
+                      "type": "url",
+                      "title": "Link"
+                    }
+                  ],
+                  "name": "link",
+                  "type": "object"
+                }
+              ],
+              "decorators": [
+                {
+                  "value": "strong",
+                  "title": "Strong"
+                },
+                {
+                  "value": "em",
+                  "title": "Italic"
+                },
+                {
+                  "value": "code",
+                  "title": "Code"
+                },
+                {
+                  "value": "underline",
+                  "title": "Underline"
+                },
+                {
+                  "value": "strike-through",
+                  "title": "Strike"
+                }
+              ]
+            },
+            "lists": [
+              {
+                "value": "bullet",
+                "title": "Bulleted list"
+              },
+              {
+                "value": "number",
+                "title": "Numbered list"
+              }
+            ],
+            "styles": [
+              {
+                "value": "normal",
+                "title": "Normal"
+              },
+              {
+                "value": "h1",
+                "title": "Heading 1"
+              },
+              {
+                "value": "h2",
+                "title": "Heading 2"
+              },
+              {
+                "value": "h3",
+                "title": "Heading 3"
+              },
+              {
+                "value": "h4",
+                "title": "Heading 4"
+              },
+              {
+                "value": "h5",
+                "title": "Heading 5"
+              },
+              {
+                "value": "h6",
+                "title": "Heading 6"
+              },
+              {
+                "value": "blockquote",
+                "title": "Quote"
+              }
+            ],
+            "of": [],
+            "type": "block"
+          },
+          {
+            "fields": [
+              {
+                "name": "alt",
+                "type": "string",
+                "title": "النص البديل"
+              }
+            ],
+            "type": "image"
+          }
+        ],
+        "name": "body",
+        "type": "array",
+        "title": "المحتوى"
+      },
+      {
+        "options": {
+          "layout": "tags"
+        },
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "tags",
+        "type": "array",
+        "title": "الوسوم"
+      },
+      {
+        "initialValue": false,
+        "name": "featured",
+        "type": "boolean",
+        "title": "مقال مميز"
+      }
+    ],
+    "name": "article",
+    "type": "document",
+    "title": "مقالات"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "name",
+        "type": "string",
+        "title": "الاسم"
+      },
+      {
+        "options": {
+          "source": "name",
+          "maxLength": 96
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "custom"
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "slug",
+        "type": "slug",
+        "title": "الرابط"
+      },
+      {
+        "name": "bio",
+        "type": "text",
+        "title": "السيرة الذاتية"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "image",
+        "type": "image",
+        "title": "الصورة الشخصية"
+      },
+      {
+        "name": "email",
+        "type": "string",
+        "title": "البريد الإلكتروني"
+      },
+      {
+        "fields": [
+          {
+            "validation": [
+              {
+                "rules": [
+                  {
+                    "flag": "uri",
+                    "constraint": {
+                      "options": {
+                        "scheme": [
+                          "/^http$/",
+                          "/^https$/"
+                        ],
+                        "allowRelative": false,
+                        "relativeOnly": false,
+                        "allowCredentials": false
+                      }
+                    }
+                  }
+                ],
+                "level": "error"
+              }
+            ],
+            "name": "twitter",
+            "type": "url",
+            "title": "تويتر/X"
+          },
+          {
+            "validation": [
+              {
+                "rules": [
+                  {
+                    "flag": "uri",
+                    "constraint": {
+                      "options": {
+                        "scheme": [
+                          "/^http$/",
+                          "/^https$/"
+                        ],
+                        "allowRelative": false,
+                        "relativeOnly": false,
+                        "allowCredentials": false
+                      }
+                    }
+                  }
+                ],
+                "level": "error"
+              }
+            ],
+            "name": "facebook",
+            "type": "url",
+            "title": "فيسبوك"
+          },
+          {
+            "validation": [
+              {
+                "rules": [
+                  {
+                    "flag": "uri",
+                    "constraint": {
+                      "options": {
+                        "scheme": [
+                          "/^http$/",
+                          "/^https$/"
+                        ],
+                        "allowRelative": false,
+                        "relativeOnly": false,
+                        "allowCredentials": false
+                      }
+                    }
+                  }
+                ],
+                "level": "error"
+              }
+            ],
+            "name": "instagram",
+            "type": "url",
+            "title": "إنستغرام"
+          },
+          {
+            "validation": [
+              {
+                "rules": [
+                  {
+                    "flag": "uri",
+                    "constraint": {
+                      "options": {
+                        "scheme": [
+                          "/^http$/",
+                          "/^https$/"
+                        ],
+                        "allowRelative": false,
+                        "relativeOnly": false,
+                        "allowCredentials": false
+                      }
+                    }
+                  }
+                ],
+                "level": "error"
+              }
+            ],
+            "name": "linkedin",
+            "type": "url",
+            "title": "لينكد إن"
+          }
+        ],
+        "name": "socialLinks",
+        "type": "object",
+        "title": "روابط التواصل الاجتماعي"
+      }
+    ],
+    "name": "writer",
+    "type": "document",
+    "title": "الكاتب"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              },
+              {
+                "flag": "uri",
+                "constraint": {
+                  "options": {
+                    "scheme": [
+                      "/^https$/"
+                    ],
+                    "allowRelative": false,
+                    "relativeOnly": false,
+                    "allowCredentials": false
+                  }
+                }
+              },
+              {
+                "flag": "custom"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "انسخ رابط التغريدة من X (Twitter). مثال: https://twitter.com/username/status/123456789",
+        "name": "url",
+        "type": "url",
+        "title": "رابط التغريدة"
+      },
+      {
+        "initialValue": 0,
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "min",
+                "constraint": 0
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "الترتيب الذي تريد عرض التغريدة به (الأقل يظهر أولاً)",
+        "name": "order",
+        "type": "number",
+        "title": "ترتيب العرض"
+      },
+      {
+        "initialValue": true,
+        "description": "حدد ما إذا كانت التغريدة يجب أن تظهر في الموقع",
+        "name": "isActive",
+        "type": "boolean",
+        "title": "نشط"
+      }
+    ],
+    "name": "tweet",
+    "type": "document",
+    "title": "تغريدة"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "title",
+        "type": "string",
+        "title": "العنوان"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "mainImage",
+        "type": "image",
+        "title": "الصورة الرئيسية"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "of": [
+          {
+            "marks": {
+              "annotations": [
+                {
+                  "i18nTitleKey": "inputs.portable-text.annotation.link",
+                  "options": {
+                    "modal": {
+                      "type": "popover"
+                    }
+                  },
+                  "fields": [
+                    {
+                      "validation": [
+                        {
+                          "rules": [
+                            {
+                              "flag": "uri",
+                              "constraint": {
+                                "options": {
+                                  "scheme": [
+                                    "/^http$/",
+                                    "/^https$/",
+                                    "/^tel$/",
+                                    "/^mailto$/"
+                                  ],
+                                  "allowRelative": true,
+                                  "relativeOnly": false,
+                                  "allowCredentials": false
+                                }
+                              }
+                            }
+                          ],
+                          "level": "error"
+                        }
+                      ],
+                      "description": "A valid web, email, phone, or relative link.",
+                      "name": "href",
+                      "type": "url",
+                      "title": "Link"
+                    }
+                  ],
+                  "name": "link",
+                  "type": "object"
+                }
+              ],
+              "decorators": [
+                {
+                  "value": "strong",
+                  "title": "Strong"
+                },
+                {
+                  "value": "em",
+                  "title": "Italic"
+                },
+                {
+                  "value": "code",
+                  "title": "Code"
+                },
+                {
+                  "value": "underline",
+                  "title": "Underline"
+                },
+                {
+                  "value": "strike-through",
+                  "title": "Strike"
+                }
+              ]
+            },
+            "lists": [
+              {
+                "value": "bullet",
+                "title": "Bulleted list"
+              },
+              {
+                "value": "number",
+                "title": "Numbered list"
+              }
+            ],
+            "styles": [
+              {
+                "value": "normal",
+                "title": "Normal"
+              },
+              {
+                "value": "h1",
+                "title": "Heading 1"
+              },
+              {
+                "value": "h2",
+                "title": "Heading 2"
+              },
+              {
+                "value": "h3",
+                "title": "Heading 3"
+              },
+              {
+                "value": "h4",
+                "title": "Heading 4"
+              },
+              {
+                "value": "h5",
+                "title": "Heading 5"
+              },
+              {
+                "value": "h6",
+                "title": "Heading 6"
+              },
+              {
+                "value": "blockquote",
+                "title": "Quote"
+              }
+            ],
+            "of": [],
+            "type": "block"
+          },
+          {
+            "fields": [
+              {
+                "name": "alt",
+                "type": "string",
+                "title": "النص البديل"
+              }
+            ],
+            "type": "image"
+          }
+        ],
+        "name": "content",
+        "type": "array",
+        "title": "المحتوى"
+      },
+      {
+        "fields": [
+          {
+            "name": "vision",
+            "type": "text",
+            "title": "الرؤية"
+          },
+          {
+            "name": "mission",
+            "type": "text",
+            "title": "الرسالة"
+          }
+        ],
+        "name": "mission",
+        "type": "object",
+        "title": "رؤيتنا ورسالتنا"
+      },
+      {
+        "of": [
+          {
+            "fields": [
+              {
+                "name": "title",
+                "type": "string",
+                "title": "العنوان"
+              },
+              {
+                "name": "description",
+                "type": "text",
+                "title": "الوصف"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "الهدف",
+                      "value": "Target"
+                    },
+                    {
+                      "title": "المستخدمون",
+                      "value": "Users"
+                    },
+                    {
+                      "title": "القلب",
+                      "value": "Heart"
+                    },
+                    {
+                      "title": "الدرع",
+                      "value": "Shield"
+                    },
+                    {
+                      "title": "النجمة",
+                      "value": "Star"
+                    },
+                    {
+                      "title": "المصباح",
+                      "value": "Lightbulb"
+                    },
+                    {
+                      "title": "الطائرة الورقية",
+                      "value": "Rocket"
+                    },
+                    {
+                      "title": "الورقة",
+                      "value": "Leaf"
+                    },
+                    {
+                      "title": "المصافحة",
+                      "value": "Handshake"
+                    },
+                    {
+                      "title": "الكتاب",
+                      "value": "Book"
+                    },
+                    {
+                      "title": "العدالة",
+                      "value": "Scale"
+                    },
+                    {
+                      "title": "السلام",
+                      "value": "Globe"
+                    },
+                    {
+                      "title": "النجاح",
+                      "value": "Trophy"
+                    },
+                    {
+                      "title": "الشفافية",
+                      "value": "Eye"
+                    },
+                    {
+                      "title": "التميز",
+                      "value": "Award"
+                    },
+                    {
+                      "title": "الإبداع",
+                      "value": "Sparkles"
+                    },
+                    {
+                      "title": "التعاون",
+                      "value": "UserCircle"
+                    },
+                    {
+                      "title": "النمو",
+                      "value": "TrendingUp"
+                    },
+                    {
+                      "title": "الجودة",
+                      "value": "Gem"
+                    },
+                    {
+                      "title": "الابتكار",
+                      "value": "Zap"
+                    }
+                  ]
+                },
+                "name": "icon",
+                "type": "string",
+                "title": "الأيقونة"
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "name": "values",
+        "type": "array",
+        "title": "قيمنا"
+      },
+      {
+        "of": [
+          {
+            "fields": [
+              {
+                "name": "name",
+                "type": "string",
+                "title": "الاسم"
+              },
+              {
+                "name": "role",
+                "type": "string",
+                "title": "الدور"
+              },
+              {
+                "name": "bio",
+                "type": "text",
+                "title": "نبذة"
+              },
+              {
+                "options": {
+                  "hotspot": true
+                },
+                "name": "image",
+                "type": "image",
+                "title": "الصورة"
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "name": "team",
+        "type": "array",
+        "title": "الفريق"
+      }
+    ],
+    "name": "about",
+    "type": "document",
+    "title": "من نحن"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "title",
+        "type": "string",
+        "title": "العنوان"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "mainImage",
+        "type": "image",
+        "title": "الصورة الرئيسية"
+      },
+      {
+        "description": "وصف مختصر لصفحة الاتصال",
+        "name": "description",
+        "type": "text",
+        "title": "الوصف"
+      },
+      {
+        "name": "email",
+        "type": "string",
+        "title": "البريد الإلكتروني"
+      },
+      {
+        "name": "phone",
+        "type": "string",
+        "title": "الهاتف"
+      },
+      {
+        "name": "address",
+        "type": "text",
+        "title": "العنوان"
+      },
+      {
+        "fields": [
+          {
+            "description": "مثال: من السبت إلى الخميس: 9 صباحاً - 5 مساءً",
+            "name": "weekdays",
+            "type": "string",
+            "title": "أيام الأسبوع"
+          },
+          {
+            "description": "مثال: الجمعة: مغلق",
+            "name": "weekend",
+            "type": "string",
+            "title": "نهاية الأسبوع"
+          }
+        ],
+        "name": "workingHours",
+        "type": "object",
+        "title": "ساعات العمل"
+      },
+      {
+        "fields": [
+          {
+            "validation": [
+              {
+                "rules": [
+                  {
+                    "flag": "uri",
+                    "constraint": {
+                      "options": {
+                        "scheme": [
+                          "/^http$/",
+                          "/^https$/"
+                        ],
+                        "allowRelative": false,
+                        "relativeOnly": false,
+                        "allowCredentials": false
+                      }
+                    }
+                  }
+                ],
+                "level": "error"
+              }
+            ],
+            "name": "twitter",
+            "type": "url",
+            "title": "تويتر"
+          },
+          {
+            "validation": [
+              {
+                "rules": [
+                  {
+                    "flag": "uri",
+                    "constraint": {
+                      "options": {
+                        "scheme": [
+                          "/^http$/",
+                          "/^https$/"
+                        ],
+                        "allowRelative": false,
+                        "relativeOnly": false,
+                        "allowCredentials": false
+                      }
+                    }
+                  }
+                ],
+                "level": "error"
+              }
+            ],
+            "name": "facebook",
+            "type": "url",
+            "title": "فيسبوك"
+          },
+          {
+            "validation": [
+              {
+                "rules": [
+                  {
+                    "flag": "uri",
+                    "constraint": {
+                      "options": {
+                        "scheme": [
+                          "/^http$/",
+                          "/^https$/"
+                        ],
+                        "allowRelative": false,
+                        "relativeOnly": false,
+                        "allowCredentials": false
+                      }
+                    }
+                  }
+                ],
+                "level": "error"
+              }
+            ],
+            "name": "instagram",
+            "type": "url",
+            "title": "إنستغرام"
+          },
+          {
+            "validation": [
+              {
+                "rules": [
+                  {
+                    "flag": "uri",
+                    "constraint": {
+                      "options": {
+                        "scheme": [
+                          "/^http$/",
+                          "/^https$/"
+                        ],
+                        "allowRelative": false,
+                        "relativeOnly": false,
+                        "allowCredentials": false
+                      }
+                    }
+                  }
+                ],
+                "level": "error"
+              }
+            ],
+            "name": "linkedin",
+            "type": "url",
+            "title": "لينكد إن"
+          },
+          {
+            "validation": [
+              {
+                "rules": [
+                  {
+                    "flag": "uri",
+                    "constraint": {
+                      "options": {
+                        "scheme": [
+                          "/^http$/",
+                          "/^https$/"
+                        ],
+                        "allowRelative": false,
+                        "relativeOnly": false,
+                        "allowCredentials": false
+                      }
+                    }
+                  }
+                ],
+                "level": "error"
+              }
+            ],
+            "name": "youtube",
+            "type": "url",
+            "title": "يوتيوب"
+          }
+        ],
+        "name": "social",
+        "type": "object",
+        "title": "وسائل التواصل الاجتماعي"
+      },
+      {
+        "fields": [
+          {
+            "validation": [
+              {
+                "rules": [
+                  {
+                    "flag": "uri",
+                    "constraint": {
+                      "options": {
+                        "scheme": [
+                          "/^http$/",
+                          "/^https$/"
+                        ],
+                        "allowRelative": false,
+                        "relativeOnly": false,
+                        "allowCredentials": false
+                      }
+                    }
+                  }
+                ],
+                "level": "error"
+              }
+            ],
+            "description": "انسخ رابط iframe من Google Maps. مثال: https://www.google.com/maps/embed?pb=...",
+            "name": "embedUrl",
+            "type": "url",
+            "title": "رابط الخريطة المضمنة"
+          },
+          {
+            "validation": [
+              {
+                "rules": [
+                  {
+                    "flag": "uri",
+                    "constraint": {
+                      "options": {
+                        "scheme": [
+                          "/^http$/",
+                          "/^https$/"
+                        ],
+                        "allowRelative": false,
+                        "relativeOnly": false,
+                        "allowCredentials": false
+                      }
+                    }
+                  }
+                ],
+                "level": "error"
+              }
+            ],
+            "description": "رابط مباشر لفتح الخريطة في Google Maps",
+            "name": "link",
+            "type": "url",
+            "title": "رابط الخريطة المباشر"
+          }
+        ],
+        "name": "googleMaps",
+        "type": "object",
+        "title": "خريطة جوجل"
+      }
+    ],
+    "name": "contact",
+    "type": "document",
+    "title": "اتصل بنا"
+  },
+  {
+    "fields": [
+      {
+        "initialValue": "القائمة الرئيسية",
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "title",
+        "type": "string",
+        "title": "اسم القائمة"
+      },
+      {
+        "fields": [
+          {
+            "options": {
+              "hotspot": true
+            },
+            "name": "image",
+            "type": "image",
+            "title": "صورة الشعار"
+          },
+          {
+            "description": "النص الذي يظهر إذا لم تكن هناك صورة",
+            "name": "text",
+            "type": "string",
+            "title": "نص الشعار"
+          },
+          {
+            "initialValue": "/",
+            "description": "الرابط عند النقر على الشعار (افتراضي: /)",
+            "name": "href",
+            "type": "string",
+            "title": "رابط الشعار"
+          }
+        ],
+        "name": "logo",
+        "type": "object",
+        "title": "الشعار"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "of": [
+          {
+            "fields": [
+              {
+                "validation": [
+                  {
+                    "rules": [
+                      {
+                        "flag": "presence",
+                        "constraint": "required"
+                      }
+                    ],
+                    "level": "error"
+                  }
+                ],
+                "name": "title",
+                "type": "string",
+                "title": "العنوان"
+              },
+              {
+                "validation": [
+                  {
+                    "rules": [
+                      {
+                        "flag": "presence",
+                        "constraint": "required"
+                      }
+                    ],
+                    "level": "error"
+                  }
+                ],
+                "description": "مثال: /articles أو /#hero",
+                "name": "href",
+                "type": "string",
+                "title": "الرابط"
+              },
+              {
+                "initialValue": 0,
+                "validation": [
+                  {
+                    "rules": [
+                      {
+                        "flag": "min",
+                        "constraint": 0
+                      }
+                    ],
+                    "level": "error"
+                  }
+                ],
+                "name": "order",
+                "type": "number",
+                "title": "الترتيب"
+              },
+              {
+                "initialValue": false,
+                "description": "حدد إذا كان الرابط يشير إلى موقع خارجي",
+                "name": "isExternal",
+                "type": "boolean",
+                "title": "رابط خارجي"
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "name": "items",
+        "type": "array",
+        "title": "عناصر القائمة"
+      }
+    ],
+    "name": "headerMenu",
+    "type": "document",
+    "title": "القائمة الرئيسية"
+  },
+  {
+    "fields": [
+      {
+        "initialValue": "قائمة التذييل",
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "title",
+        "type": "string",
+        "title": "اسم القائمة"
+      },
+      {
+        "fields": [
+          {
+            "options": {
+              "hotspot": true
+            },
+            "name": "image",
+            "type": "image",
+            "title": "صورة الشعار"
+          },
+          {
+            "description": "النص الذي يظهر إذا لم تكن هناك صورة",
+            "name": "text",
+            "type": "string",
+            "title": "نص الشعار"
+          },
+          {
+            "initialValue": "/",
+            "description": "الرابط عند النقر على الشعار (افتراضي: /)",
+            "name": "href",
+            "type": "string",
+            "title": "رابط الشعار"
+          }
+        ],
+        "name": "logo",
+        "type": "object",
+        "title": "الشعار"
+      },
+      {
+        "of": [
+          {
+            "fields": [
+              {
+                "validation": [
+                  {
+                    "rules": [
+                      {
+                        "flag": "presence",
+                        "constraint": "required"
+                      }
+                    ],
+                    "level": "error"
+                  }
+                ],
+                "name": "title",
+                "type": "string",
+                "title": "عنوان القسم"
+              },
+              {
+                "of": [
+                  {
+                    "fields": [
+                      {
+                        "validation": [
+                          {
+                            "rules": [
+                              {
+                                "flag": "presence",
+                                "constraint": "required"
+                              }
+                            ],
+                            "level": "error"
+                          }
+                        ],
+                        "name": "title",
+                        "type": "string",
+                        "title": "العنوان"
+                      },
+                      {
+                        "validation": [
+                          {
+                            "rules": [
+                              {
+                                "flag": "presence",
+                                "constraint": "required"
+                              }
+                            ],
+                            "level": "error"
+                          }
+                        ],
+                        "name": "href",
+                        "type": "string",
+                        "title": "الرابط"
+                      },
+                      {
+                        "initialValue": false,
+                        "name": "isExternal",
+                        "type": "boolean",
+                        "title": "رابط خارجي"
+                      }
+                    ],
+                    "type": "object"
+                  }
+                ],
+                "name": "items",
+                "type": "array",
+                "title": "عناصر القسم"
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "name": "sections",
+        "type": "array",
+        "title": "أقسام التذييل"
+      },
+      {
+        "initialValue": "جميع الحقوق محفوظة",
+        "description": "النص الذي يظهر في أسفل التذييل",
+        "name": "copyright",
+        "type": "string",
+        "title": "نص حقوق النشر"
+      }
+    ],
+    "name": "footerMenu",
+    "type": "document",
+    "title": "قائمة التذييل"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "اسم أو عنوان لمصدر RSS (مثال: وكالة الأنباء)",
+        "name": "title",
+        "type": "string",
+        "title": "اسم المصدر"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              },
+              {
+                "flag": "uri",
+                "constraint": {
+                  "options": {
+                    "scheme": [
+                      "/^http$/",
+                      "/^https$/"
+                    ],
+                    "allowRelative": false,
+                    "relativeOnly": false,
+                    "allowCredentials": false
+                  }
+                }
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "رابط مصدر RSS للأخبار العاجلة",
+        "name": "url",
+        "type": "url",
+        "title": "رابط RSS"
+      },
+      {
+        "initialValue": true,
+        "description": "حدد ما إذا كان يجب استخدام هذا المصدر في شريط الأخبار العاجلة",
+        "name": "isActive",
+        "type": "boolean",
+        "title": "نشط"
+      },
+      {
+        "initialValue": 10,
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "min",
+                "constraint": 1
+              },
+              {
+                "flag": "max",
+                "constraint": 50
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "الحد الأقصى لعدد الأخبار العاجلة من هذا المصدر (افتراضي: 10)",
+        "name": "itemLimit",
+        "type": "number",
+        "title": "عدد العناصر"
+      },
+      {
+        "placeholder": "/article/{slug}",
+        "description": "نمط الرابط للعناصر (اختياري). استخدم {link} كعنصر نائب للرابط الأصلي من RSS",
+        "name": "linkPattern",
+        "type": "string",
+        "title": "نمط الرابط"
+      },
+      {
+        "initialValue": 15,
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "min",
+                "constraint": 1
+              },
+              {
+                "flag": "max",
+                "constraint": 1440
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "كم مرة يجب تحديث البيانات من هذا المصدر (بالدقائق)",
+        "name": "updateInterval",
+        "type": "number",
+        "title": "فترة التحديث (بالدقائق)"
+      }
+    ],
+    "name": "rssFeed",
+    "type": "document",
+    "title": "مصدر RSS للأخبار العاجلة"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "title",
+        "type": "string",
+        "title": "العنوان"
+      },
+      {
+        "options": {
+          "source": "title",
+          "maxLength": 96
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "custom"
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "slug",
+        "type": "slug",
+        "title": "الرابط"
+      },
+      {
+        "name": "description",
+        "type": "text",
+        "title": "الوصف"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "image",
+        "type": "image",
+        "title": "صورة الفئة"
+      }
+    ],
+    "name": "category",
+    "type": "document",
+    "title": "الفئة"
+  }
+]

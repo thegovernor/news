@@ -48,7 +48,12 @@ const FEATURED_ARTICLES_QUERY = `*[_type == "article" && featured == true] | ord
 }`
 
 export async function getFeaturedArticles(): Promise<Article[]> {
-  return await client.fetch<Article[]>(FEATURED_ARTICLES_QUERY)
+  return await client.fetch<Article[]>(FEATURED_ARTICLES_QUERY, {}, {
+    next: { 
+      revalidate: 0, // Always fetch fresh data
+      tags: ['articles', 'featured-articles']
+    }
+  })
 }
 
 const RSS_FEEDS_QUERY = `*[_type == "rssFeed" && isActive == true] {
@@ -150,7 +155,12 @@ async function parseRSSFeed(feedConfig: RSSFeedConfig): Promise<BreakingNews[]> 
 export async function getBreakingNews(): Promise<BreakingNews[]> {
   try {
     // Fetch active RSS feed configurations
-    const feedConfigs = await client.fetch<RSSFeedConfig[]>(RSS_FEEDS_QUERY)
+    const feedConfigs = await client.fetch<RSSFeedConfig[]>(RSS_FEEDS_QUERY, {}, {
+      next: { 
+        revalidate: 0,
+        tags: ['rss-feeds', 'breaking-news']
+      }
+    })
     
     if (!feedConfigs || feedConfigs.length === 0) {
       return []
@@ -197,7 +207,12 @@ const ARTICLES_QUERY = `*[_type == "article" && category->title == "مقالات
 
 export async function getArticles(): Promise<Article[]> {
   try {
-    const result = await client.fetch<Article[]>(ARTICLES_QUERY)
+    const result = await client.fetch<Article[]>(ARTICLES_QUERY, {}, {
+      next: { 
+        revalidate: 0,
+        tags: ['articles']
+      }
+    })
     return result || []
   } catch (error) {
     console.error("Error fetching articles:", error)
@@ -221,7 +236,12 @@ const TWEETS_QUERY = `*[_type == "tweet" && isActive == true] | order(order asc)
 
 export async function getTweets(): Promise<Tweet[]> {
   try {
-    const result = await client.fetch<Tweet[]>(TWEETS_QUERY)
+    const result = await client.fetch<Tweet[]>(TWEETS_QUERY, {}, {
+      next: { 
+        revalidate: 0,
+        tags: ['tweets']
+      }
+    })
     return result || []
   } catch (error) {
     console.error("Error fetching tweets:", error)
@@ -279,7 +299,12 @@ const POLITICAL_ANALYSIS_ARTICLES_LIMITED_QUERY = `*[_type == "article" && categ
 
 export async function getPoliticalAnalysisArticlesLimited(): Promise<Article[]> {
   try {
-    const result = await client.fetch<Article[]>(POLITICAL_ANALYSIS_ARTICLES_LIMITED_QUERY)
+    const result = await client.fetch<Article[]>(POLITICAL_ANALYSIS_ARTICLES_LIMITED_QUERY, {}, {
+      next: { 
+        revalidate: 0,
+        tags: ['articles', 'political-analysis']
+      }
+    })
     return result || []
   } catch (error) {
     console.error("Error fetching political analysis articles:", error)
@@ -466,7 +491,12 @@ const BARID_ARTICLES_LIMITED_QUERY = `*[_type == "article" && category->title ==
 
 export async function getBaridArticlesLimited(): Promise<Article[]> {
   try {
-    const result = await client.fetch<Article[]>(BARID_ARTICLES_LIMITED_QUERY)
+    const result = await client.fetch<Article[]>(BARID_ARTICLES_LIMITED_QUERY, {}, {
+      next: { 
+        revalidate: 0,
+        tags: ['articles', 'barid']
+      }
+    })
     return result || []
   } catch (error) {
     console.error("Error fetching barid articles:", error)
@@ -495,7 +525,12 @@ const SALA_WADK_ARTICLES_LIMITED_QUERY = `*[_type == "article" && category->titl
 
 export async function getSalaWadkArticlesLimited(): Promise<Article[]> {
   try {
-    const result = await client.fetch<Article[]>(SALA_WADK_ARTICLES_LIMITED_QUERY)
+    const result = await client.fetch<Article[]>(SALA_WADK_ARTICLES_LIMITED_QUERY, {}, {
+      next: { 
+        revalidate: 0,
+        tags: ['articles', 'sala-wadk']
+      }
+    })
     return result || []
   } catch (error) {
     console.error("Error fetching sala wadk articles:", error)

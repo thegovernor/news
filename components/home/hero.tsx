@@ -6,7 +6,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { urlFor } from "@/sanity/lib/image"
 import type { Article } from "@/lib/sanity/queries"
-import { Clock, User } from "lucide-react"
+import { Clock, User, Newspaper } from "lucide-react"
 import { getCategoryString } from "@/lib/utils/article"
 
 interface HeroProps {
@@ -149,16 +149,22 @@ export function Hero({ articles }: HeroProps) {
                       className="block w-[280px] flex-shrink-0"
                     >
                       <Card className="group overflow-hidden border-0 transition-all duration-300 cursor-pointer hover:shadow-lg rounded-none h-full">
-                        <div className="relative aspect-video w-full overflow-hidden mb-3">
-                          <Image
-                            src={urlFor(article.mainImage)
-                              .width(400)
-                              .height(300)
-                              .url()}
-                            alt={article.title}
-                            fill
-                            className="object-cover transition-transform duration-500 group-hover:scale-110"
-                          />
+                        <div className="relative aspect-video w-full overflow-hidden mb-3 bg-muted">
+                          {article.mainImage ? (
+                            <Image
+                              src={urlFor(article.mainImage)
+                                .width(400)
+                                .height(300)
+                                .url()}
+                              alt={article.title}
+                              fill
+                              className="object-cover transition-transform duration-500 group-hover:scale-110"
+                            />
+                          ) : (
+                            <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-muted to-muted/50">
+                              <Newspaper className="w-8 h-8 text-muted-foreground/30" />
+                            </div>
+                          )}
                         </div>
                         <CardContent className="p-3 md:p-4">
                           <Badge 
@@ -196,16 +202,22 @@ export function Hero({ articles }: HeroProps) {
                     <Card className="group overflow-hidden border-0 transition-all duration-300 cursor-pointer hover:shadow-lg rounded-none">
                       <div className="flex flex-col sm:flex-row gap-4">
                         {/* Image */}
-                        <div className="relative w-full sm:w-32 sm:flex-shrink-0 aspect-video sm:aspect-square overflow-hidden">
-                          <Image
-                            src={urlFor(article.mainImage)
-                              .width(400)
-                              .height(300)
-                              .url()}
-                            alt={article.title}
-                            fill
-                            className="object-cover transition-transform duration-500 group-hover:scale-110"
-                          />
+                        <div className="relative w-full sm:w-32 sm:flex-shrink-0 aspect-video sm:aspect-square overflow-hidden bg-muted">
+                          {article.mainImage ? (
+                            <Image
+                              src={urlFor(article.mainImage)
+                                .width(400)
+                                .height(300)
+                                .url()}
+                              alt={article.title}
+                              fill
+                              className="object-cover transition-transform duration-500 group-hover:scale-110"
+                            />
+                          ) : (
+                            <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-muted to-muted/50">
+                              <Newspaper className="w-8 h-8 text-muted-foreground/30" />
+                            </div>
+                          )}
                         </div>
                         
                         {/* Content */}

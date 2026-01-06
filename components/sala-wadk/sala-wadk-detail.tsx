@@ -114,15 +114,17 @@ export function SalaWadkDetail({ article }: SalaWadkDetailProps) {
       {/* Article Content */}
       <div className="container mx-auto px-4 max-w-4xl py-8 md:py-12">
         {/* Hero Image */}
-        <div className="relative w-full aspect-video md:aspect-[21/9] mb-8 md:mb-12 rounded-lg overflow-hidden">
-          <Image
-            src={urlFor(article.mainImage).width(1920).height(1080).url()}
-            alt={article.title}
-            fill
-            className="object-cover"
-            priority
-          />
-        </div>
+        {article.mainImage && (
+          <div className="relative w-full aspect-video md:aspect-[21/9] mb-8 md:mb-12 rounded-lg overflow-hidden">
+            <Image
+              src={urlFor(article.mainImage).width(1920).height(1080).url()}
+              alt={article.title}
+              fill
+              className="object-cover"
+              priority
+            />
+          </div>
+        )}
         {/* Header */}
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-4">

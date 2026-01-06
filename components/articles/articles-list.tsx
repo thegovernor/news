@@ -123,17 +123,23 @@ export function ArticlesList({ articles, category }: ArticlesListProps) {
                   <Card className="overflow-hidden border hover:border-primary/50 transition-all duration-300 shadow-sm hover:shadow-lg">
                     <div className="flex flex-col md:flex-row gap-4 md:gap-6">
                       {/* Image */}
-                      <div className="relative w-full md:w-64 lg:w-80 flex-shrink-0 aspect-video md:aspect-square overflow-hidden rounded-lg">
-                        <Image
-                          src={urlFor(article.mainImage)
-                            .width(800)
-                            .height(600)
-                            .url()}
-                          alt={article.title}
-                          fill
-                          className="object-cover transition-transform duration-500 group-hover:scale-110"
-                          sizes="(max-width: 768px) 100vw, 256px"
-                        />
+                      <div className="relative w-full md:w-64 lg:w-80 flex-shrink-0 aspect-video md:aspect-square overflow-hidden rounded-lg bg-muted">
+                        {article.mainImage ? (
+                          <Image
+                            src={urlFor(article.mainImage)
+                              .width(800)
+                              .height(600)
+                              .url()}
+                            alt={article.title}
+                            fill
+                            className="object-cover transition-transform duration-500 group-hover:scale-110"
+                            sizes="(max-width: 768px) 100vw, 256px"
+                          />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-muted to-muted/50">
+                            <Newspaper className="w-12 h-12 text-muted-foreground/30" />
+                          </div>
+                        )}
                         <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                         
                         {/* Category Badge */}

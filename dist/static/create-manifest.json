@@ -1,6 +1,6 @@
 {
   "version": 3,
-  "createdAt": "2025-12-30T12:45:05.109Z",
+  "createdAt": "2026-01-06T14:53:39.586Z",
   "workspaces": [
     {
       "name": "default",
@@ -8,13 +8,13 @@
       "basePath": "/studio",
       "projectId": "aec2t1cw",
       "dataset": "production",
-      "icon": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\"><rect width=\"32\" height=\"32\" rx=\"2\" fill=\"#653a0b\"></rect><text x=\"50%\" y=\"50%\" text-anchor=\"middle\" alignment-baseline=\"middle\" fill=\"hsla(31, 80%, 62%, 1)\" class=\"sc-gzpDuk hfXNsv\">D</text></svg>",
+      "icon": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\"><rect width=\"32\" height=\"32\" rx=\"2\" fill=\"#653a0b\"></rect><text x=\"50%\" y=\"50%\" text-anchor=\"middle\" alignment-baseline=\"middle\" fill=\"hsla(31, 80%, 62%, 1)\" style=\"font-family:Inter, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, &quot;Liberation Sans&quot;, Helvetica, Arial, system-ui, sans-serif;font-weight:500;font-size:13px;transform:translateY(1px)\">D</text></svg>",
       "mediaLibrary": {
         "enabled": false
       },
-      "schema": "6c7d3159.create-schema.json",
-      "tools": "46f6d878.create-tools.json"
+      "schema": "5d5ca6b8.create-schema.json",
+      "tools": "ba47da56.create-tools.json"
     }
   ],
-  "studioVersion": "4.20.3"
+  "studioVersion": "5.1.0"
 }

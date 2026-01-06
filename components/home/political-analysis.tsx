@@ -39,17 +39,23 @@ export function PoliticalAnalysis({
               >
                 <Card className="overflow-hidden border-0 shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer h-full flex flex-col bg-card hover:border-primary/20">
                   {/* Image Container */}
-                  <div className="relative w-full aspect-video overflow-hidden">
-                    <Image
-                      src={urlFor(article.mainImage)
-                        .width(800)
-                        .height(600)
-                        .url()}
-                      alt={article.title}
-                      fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-110"
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                    />
+                  <div className="relative w-full aspect-video overflow-hidden bg-muted">
+                    {article.mainImage ? (
+                      <Image
+                        src={urlFor(article.mainImage)
+                          .width(800)
+                          .height(600)
+                          .url()}
+                        alt={article.title}
+                        fill
+                        className="object-cover transition-transform duration-500 group-hover:scale-110"
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-muted to-muted/50">
+                        <TrendingUp className="w-12 h-12 text-muted-foreground/30" />
+                      </div>
+                    )}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     
                     {/* Category Badge */}
