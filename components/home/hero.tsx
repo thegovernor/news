@@ -142,7 +142,7 @@ export function Hero({ articles }: HeroProps) {
               {/* Mobile: Horizontal Scroll */}
               <div className="lg:hidden overflow-x-auto pb-2 -mx-4 px-4 scrollbar-hide">
                 <div className="flex gap-3 min-w-max">
-                  {sidebarArticles.filter(article => article.mainImage).map((article) => (
+                  {sidebarArticles.map((article) => (
                     <Link
                       key={article._id}
                       href={getArticleUrl(article)}
@@ -193,7 +193,7 @@ export function Hero({ articles }: HeroProps) {
 
               {/* Desktop: Vertical Scrollable Stack */}
               <div className="hidden lg:block overflow-y-auto max-h-[calc(100vh-200px)] scrollbar-hide space-y-0 pr-2">
-                {sidebarArticles.filter(article => article.mainImage).map((article) => (
+                {sidebarArticles.map((article) => (
                   <Link
                     key={article._id}
                     href={getArticleUrl(article)}
