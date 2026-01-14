@@ -96,7 +96,7 @@ export function Footer({ menu }: FooterProps) {
                   </div>
                 ) : (
                   <span className="text-3xl font-bold text-primary">
-                    {menu.logo.text || "أخبار"}
+                    {menu.logo.text || ""}
                   </span>
                 )}
               </Link>
@@ -145,7 +145,7 @@ export function Footer({ menu }: FooterProps) {
         <div className="mt-12 pt-8 border-t-2 border-primary">
           <div className="flex flex-col md:flex-row justify-center items-center gap-4">
             <p className="text-sm text-muted-foreground">
-              © {new Date().getFullYear()} أخبار. <span className="text-primary">{copyright}</span>
+              © {new Date().getFullYear()}. <span className="text-primary">{copyright}</span>
             </p>
           </div>
         </div>

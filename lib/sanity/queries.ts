@@ -696,6 +696,58 @@ export async function getAbout(): Promise<AboutContent | null> {
   }
 }
 
+export interface TermsOfUseContent {
+  _id: string
+  title: string
+  mainImage?: SanityImageSource
+  content: PortableTextBlock[]
+  lastUpdated?: string
+}
+
+const TERMS_OF_USE_QUERY = `*[_type == "termsOfUse"][0] {
+  _id,
+  title,
+  mainImage,
+  content,
+  lastUpdated
+}`
+
+export async function getTermsOfUse(): Promise<TermsOfUseContent | null> {
+  try {
+    const result = await client.fetch<TermsOfUseContent | null>(TERMS_OF_USE_QUERY)
+    return result || null
+  } catch (error) {
+    console.error("Error fetching terms of use content:", error)
+    return null
+  }
+}
+
+export interface PrivacyPolicyContent {
+  _id: string
+  title: string
+  mainImage?: SanityImageSource
+  content: PortableTextBlock[]
+  lastUpdated?: string
+}
+
+const PRIVACY_POLICY_QUERY = `*[_type == "privacyPolicy"][0] {
+  _id,
+  title,
+  mainImage,
+  content,
+  lastUpdated
+}`
+
+export async function getPrivacyPolicy(): Promise<PrivacyPolicyContent | null> {
+  try {
+    const result = await client.fetch<PrivacyPolicyContent | null>(PRIVACY_POLICY_QUERY)
+    return result || null
+  } catch (error) {
+    console.error("Error fetching privacy policy content:", error)
+    return null
+  }
+}
+
 export interface ContactContent {
   _id: string
   title: string

@@ -107,6 +107,10 @@ export async function POST(request: NextRequest) {
       revalidatePath('/about')
     } else if (_type === 'contact') {
       revalidatePath('/contact')
+    } else if (_type === 'termsOfUse') {
+      revalidatePath('/terms-of-use')
+    } else if (_type === 'privacyPolicy') {
+      revalidatePath('/privacy-policy')
     } else if (_type === 'rssFeed' || _type === 'tweet') {
       // Revalidate cache tags
       if (_type === 'rssFeed') {

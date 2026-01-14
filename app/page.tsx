@@ -33,20 +33,22 @@ export default async function Home() {
       <div id="hero">
         <Hero articles={articles} />
       </div>
-      <div id="political-analysis">
-        <PoliticalAnalysis articles={politicalAnalysisArticles} />
+      <div id="sala-wadk">
+        <SalaWadk articles={salaWadkArticles} />
       </div>
       <div id="articles">
         <Articles articles={latestArticles} />
       </div>
-      <div id="tweets">
-        <Tweets tweets={tweets} />
-      </div>
       <div id="barid">
         <Barid articles={baridArticles} />
       </div>
-      <div id="sala-wadk">
-        <SalaWadk articles={salaWadkArticles} />
+      {politicalAnalysisArticles.length > 0 && (
+        <div id="political-analysis">
+          <PoliticalAnalysis articles={politicalAnalysisArticles} />
+        </div>
+      )}
+      <div id="tweets">
+        <Tweets tweets={tweets} />
       </div>
     </main>
   );
